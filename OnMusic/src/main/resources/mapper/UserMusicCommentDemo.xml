@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 一对多关联查询 整理方式1 =========关联的嵌套结果 避免 “N+1 查询问题” -->
+<mapper namespace="com.avicit.onlinemusic.dao.UserMusicCommentDemo">
+	<select id="selectOne1Music" resultMap="musicResult"
+		parameterType="int">
+		select
+		m.id as id,
+		m.title as title,
+		m.singer as singer,
+		m.special as special,
+		m.value as value,
+		m.time as time,
+		m.click as click,
+		m.url as url,
+		m.user_id as userId,
+
+		c.id as cId,
+		c.value as cValue,
+		c.name
+		as cName,
+		c.music_id as cMusicId,
+		c.time as cTime
+
+		from music m left outer
+		join comments c
+		on m.id=c.music_id
+		where
+		m.id=#{musicId}
+	</select>
+
+	<select id="selectList1Music" resultMap="musicResult">
+		select
+		m.id
+		as id,
+		m.title
+		as title,
+		m.singer as singer,
+		m.special as special,
+		m.value as value,
+		m.time as time,
+		m.click as click,
+		m.url as url,
+		m.user_id as userId,
+
+		c.id
+		as cId,
+		c.value as cValue,
+		c.name as cName,
+		c.music_id as cMusicId,
+		c.time as cTime
+
+		from music m left outer join comments c
+		on
+		m.id=c.music_id
+	</select>
+
+	<resultMap id="musicResult" type="Music">
+		<id property="id" column="id" />
+		<result property="title" column="title" />
+		<result property="singer" column="singer" />
+		<result property="special" column="special" />
+		<result property="value" column="value" />
+		<result property="time" column="time" />
+		<result property="click" column="click" />
+		<result property="url" column="url" />
+		<result property="userId" column="userId" />
+		<!-- 备注1:property="listCommnet" 对应music对象里的List<Comments> listCommnet属性 -->
+		<!-- 备注2:column="id" 指music对象的id用于 一对多 关联Comments里的music_id -->
+		<!-- 备注3:javaType="Comments" 如果用关联的嵌套结果方式，一对多时 这儿类型用Comments或者list都可以 -->
+		<association property="listCommnet" column="id" javaType="Comments" fetchType="lazy"
+			resultMap="commentsResult" />
+	</resultMap>
+
+	<resultMap id="commentsResult" type="Comments">
+		<id property="id" column="cId" />
+		<result property="value" column="cValue" />
+		<result property="name" column="cName" />
+		<result property="musicId" column="cMusicId" />
+		<result property="time" column="cTime" />
+	</resultMap>
+
+	<!-- 一对多关联查询 整理方式2====关联的嵌套查询 有 “N+1 查询问题” -->
+	<!-- 以下方式很简单, 但是对于大型数据集合和列表将不会表现很好。 问题就是我们熟知的 “N+1 查询问题”。概括地讲,N+1 查询问题可以是这样引起的: -->
+	<select id="selectOne2Music" resultMap="musicResult2"
+		parameterType="int">
+		SELECT
+		
+		id as id,
+		title as title,
+		singer as singer,
+		special
+		as special,
+		value as
+		value,
+		time as time,
+		click as click,
+		url as url,
+		user_id as userId
+
+		FROM music WHERE
+		ID = #{musicId}
+	</select>
+
+	<select id="selectList2Music" resultMap="musicResult2">
+		SELECT
+		
+		id as id,
+		title as
+		title,
+		singer as singer,
+		special as special,
+		value as
+		value,
+		time as time,
+		click as click,
+		url as url,
+		user_id as userId
+
+		FROM music
+	</select>
+
+	<resultMap id="musicResult2" type="Music">
+	<!-- 备注1:javaType="list" 如果用关联的嵌套查询 方式，一对多时 这儿类型必须用list，而不能用Comments -->
+		<association property="listCommnet" column="id" javaType="list"
+			select="selectComments" fetchType="lazy"/>
+	</resultMap>
+
+	<select id="selectComments" resultType="Comments" parameterType="int" >
+		SELECT
+		id as id,
+		value as value,
+		name as name,
+		music_id as musicId,
+		time as
+		time
+		FROM Comments WHERE
+		music_id = #{id}
+	</select>
+
+</mapper>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.avicit.onlinemusic.daotwo.MusicBackupServiceDaoMapper">
+
+	<!-- 第二数据源使用 -->
+	<insert id="saveBackupMusic" parameterType="MusicBackup"
+		useGeneratedKeys="true" keyProperty="id">
+		insert
+		into Music_backup(
+		title,
+		singer,
+		special,
+		value,
+		time,
+		click,
+		url,
+		user_id
+		)
+		values
+		(
+		#{title},
+		#{singer},
+		#{special},
+		#{value},
+		#{time},
+		#{click},
+		#{url},
+		#{userId}
+		)
+	</insert>
+</mapper>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.avicit.onlinemusic.dao.TipServiceDaoMapper">
+	<update id="updateTip" parameterType="Tip">
+		update Tip set
+		value=#{value}
+		where id=#{id}
+	</update>
+
+	<delete id="deleteTip" parameterType="Tip">
+		delete from Tip where id
+		=
+		#{id}
+	</delete>
+
+	<insert id="saveTip" parameterType="Tip" useGeneratedKeys="true"
+		keyProperty="id">
+		insert
+		into Tip(
+		value
+		)
+		values
+		(
+		#{value}
+		)
+	</insert>
+</mapper>

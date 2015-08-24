@@ -1,0 +1,18 @@
+
+1.升级到tomcat-7.0.63版本后 报:
+严重: Servlet.service() for servlet jsp threw exception
+java.lang.IllegalArgumentException: Page directive: invalid value for import错误
+原因:<%@ page import=" java.util.*;"%>一句引起的错误。把<%@ page import=" java.util.*;"%>中的分号去掉就好了，改为：
+<%@ page import=" java.util.*"%> 所以以后写import要规范。
+--------------------------------------------------------------------------
+2.Target runtime Apache Tomcat v6.0.20 is not defined 
+这种情况出现的场景：
+       从别处copy源代码，包括eclipse等的配置。这样源代码里面包含了其它人的project配置。
+  JEE eclipse的修改方法：
+      在工程上点击右键------->Targeted Runtimes----->勾选自己的tomcat就可以了
+       同样的情况也可能出现在JDK的版本上，有可能你自己电脑上用JDK6，其它人的电脑用JDK5，这个时候要修改JDK，要
+      在工程上点击右键--------->Project Facets------->勾选JAVA--------->选择6.0
+
+
+
+

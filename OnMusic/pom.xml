@@ -1,0 +1,242 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.mac</groupId>
+	<artifactId>OnMusic</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+
+	<build>
+		<finalName>OnMusic</finalName>
+	</build>
+	<properties>
+		<!-- spring版本号 -->
+		<spring.version>3.2.4.RELEASE</spring.version>
+		<!-- mybatis版本号 -->
+		<mybatis.version>3.3.0</mybatis.version>
+		<!-- hibernate.version版本号 -->
+		<hibernate.version>3.2.4</hibernate.version>
+		<!-- log4j日志文件管理包版本 -->
+		<slf4j.version>1.6.6</slf4j.version>
+		<log4j.version>1.2.12</log4j.version>
+	</properties>
+
+	<dependencies>
+		<!-- spring核心包 -->
+		<!-- springframe start -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-oxm</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<!-- springframe end -->
+		<!-- springAOP依赖的aspectjweaver -->
+		<dependency>
+			<groupId>aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>1.5.3</version>
+		</dependency>
+
+		<!-- hibernate start -->
+
+		<!-- hibernate end -->
+
+		<!-- mybatis核心包 -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>${mybatis.version}</version>
+		</dependency>
+		<!-- mybatis/spring包 -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+			<version>1.2.2</version>
+		</dependency>
+		<!-- DB2 驱动包 -->
+		<dependency>		
+			<groupId>cn.guoyukun.jdbc</groupId>
+			<artifactId>db2jcc</artifactId>
+			<version>1.4.2</version>
+		</dependency>
+		<dependency>
+			<groupId>cn.guoyukun.jdbc</groupId>
+			<artifactId>db2jcc_license_cu</artifactId>
+			<version>1.4.2</version>
+		</dependency>
+		<!-- oracle 驱动包 -->
+
+		<!-- mysql驱动包 -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.29</version>
+		</dependency>
+		<!-- junit测试包 -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- 数据库连接池 实现 -->
+		<!-- spring配置 使用阿里巴巴 实现数据库连接池 依赖 包 【当前程序中没有】 -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>1.0.2</version>
+		</dependency>
+		<!-- spring配置proxool连接池 【当前程序中使用】 -->
+		<!-- 目前最新的版本为0.91版，可从官网下载最新版本http://proxool.sourceforge.net -->
+		<!-- maven引入 proxool有问题 直接在lib目录下添加proxool.jar和proxool-cglib.jar -->
+		<!-- <dependency> <groupId>com.cloudhopper.proxool</groupId> <artifactId>proxool</artifactId> 
+			<version>0.9.1</version> </dependency> <dependency> <groupId>com.cloudhopper.proxool</groupId> 
+			<artifactId>proxool-cglib</artifactId> <version>0.9.1</version> </dependency> -->
+
+		<!-- json数据 -->
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.13</version>
+		</dependency>
+		<!-- 日志文件管理包 -->
+		<!-- log start -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<!-- log end -->
+		<!-- 表单验证使用spring validator 对bean进行类似js的校验 -->
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>1.1.0.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>5.1.2.Final</version>
+		</dependency>
+		<!-- 操作bean对象属性 相关包 util -->
+		<!-- com.avicit.framework.util 下相关工具类依赖包 -->
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils-core</artifactId>
+			<version>1.8.3</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.6</version>
+		</dependency>
+		<dependency>
+			<groupId>jdom</groupId>
+			<artifactId>jdom</artifactId>
+			<version>1.1</version>
+		</dependency>
+		<!-- SON库有两种口味，根据的JDK兼容性。简称JSON库- 20 - jdk13兼容的JDK 1.3.1及以上。 -->
+		<!--简称JSON库- 20 - jdk15兼容的JDK 1.5 ，包括支持枚举在JSONArray和JSONObject -->
+		<!-- json-lib提供了两个jdk版本的实现,把dependency的描述修改成下面的形式就就解决问题了 -->
+		<dependency>
+			<groupId>net.sf.json-lib</groupId>
+			<artifactId>json-lib</artifactId>
+			<version>2.4</version>
+			<classifier>jdk15</classifier>
+		</dependency>
+		<!-- 文件上传下载 -->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.4</version>
+		</dependency>
+		<!-- webservice调用依赖jar包 -->
+		<!--暂时废弃 <dependency> <groupId>axis</groupId> <artifactId>axis</artifactId> 
+			<version>1.4 </version> </dependency> -->
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-transports-http</artifactId>
+			<version>2.7.3</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-frontend-jaxws</artifactId>
+			<version>2.7.3</version>
+		</dependency>
+
+
+		<!-- activeMq依赖jar包 -->
+		<!-- activemq-all-5.6.0.jar spring-jms-3.0.6.RELEASE.jar org.springframework.transaction-3.2.4.RELEASE.jar 
+			以上的包为手动加入lib文件夹中，以下的包已经用maven关联加载，其他功能也会用到 spring-asm-3.0.6.RELEASE.jar commons-logging-1.1.1.jar 
+			spring-beans-3.0.6.RELEASE.jar spring-context-3.0.6.RELEASE.jar spring-core-3.0.6.RELEASE.jar 
+			spring-expression-3.0.6.RELEASE.jar log4j-1.2.16.jar -->
+	</dependencies>
+
+</project>

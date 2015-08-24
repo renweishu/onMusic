@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+
+
+	<!--【数据源1】 开 启 Spring 的 事 务 处 理 标准配置 管理数据源1 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- 其中的 'transaction-manager' 属性被设置为一个指向 PlatformTransactionManager bean的名字 -->
+	<!-- （这里指 'transactionManager'）， 该bean将会真正管理事务。 -->
+	<!-- <tx:advice id="defaultTxAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="list*" read-only="true" />
+			<tx:method name="find*" read-only="true" />
+			<tx:method name="save*" read-only="false" />
+			<tx:method name="delete*" read-only="false" />
+			<tx:method name="update*" read-only="false" />
+			<tx:method name="*" />
+		</tx:attributes>
+	</tx:advice>
+
+	<aop:config>
+		<aop:pointcut id="defaultServiceOperation"
+			expression="execution(com.avicit.onlinemusic.service.*(..))" />
+
+		<aop:advisor pointcut-ref="defaultServiceOperation"
+			advice-ref="defaultTxAdvice" />
+	</aop:config> -->
+
+
+	<!-- *******************************************数据源1和2 分界线***************************************************** -->
+
+	<!-- 【数据源2】开 启 Spring 的 事 务 处 理 标准配置 管理数据源2 -->
+	<bean id="transactionManager1"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource1" />
+	</bean>
+
+
+</beans>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.avicit.onlinemusic.dao.MessageServiceDaoMapper">
+	<update id="updateLink" parameterType="Link">
+		update admin set
+		value=#{value},
+		title=#{title}
+		where id=#{id}
+	</update>
+
+	<delete id="deleteLink" parameterType="Link">
+		delete from Link where id
+		=
+		#{id}
+	</delete>
+
+	<insert id="saveLink" parameterType="Link" useGeneratedKeys="true"
+		keyProperty="id">
+		insert
+		into Link(
+		value,
+		title
+		)
+		values
+		(
+		#{value},
+		#{title}
+		)
+	</insert>
+</mapper>

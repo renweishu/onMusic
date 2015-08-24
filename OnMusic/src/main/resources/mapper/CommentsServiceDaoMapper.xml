@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.avicit.onlinemusic.dao.CommentsServiceDaoMapper">
+	<update id="updateComments" parameterType="Comments">
+		update Comments set
+		value=#{value}
+		name=#{name},
+		music_id=#{musicId},
+		time=#{time}
+		where id=#{id}
+	</update>
+
+	<delete id="deleteComments" parameterType="Comments">
+		delete from Comments where id
+		=
+		#{id}
+	</delete>
+
+	<insert id="saveComments" parameterType="Comments" useGeneratedKeys="true"
+		keyProperty="id">
+		insert
+		into Comments(
+		value,
+		name,
+		music_id,
+		time
+		)
+		values
+		(
+		#{value},
+		#{name},
+		#{musicId},
+		#{time}
+		)
+	</insert>
+</mapper>

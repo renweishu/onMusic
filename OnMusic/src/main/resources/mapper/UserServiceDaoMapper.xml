@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.avicit.onlinemusic.dao.UserServiceDaoMapper">
+	<!-- 作为一个demo实例参照 -->
+
+	<!-- mybatis缓存 -->
+	<cache eviction="LRU" flushInterval="600000" size="1024"
+		readOnly="false" />
+
+	<!-- 方式2 -->
+	<select id="selectList2User" resultType="User" parameterType="String">
+		SELECT id as id,name as
+		name,pwd as pwd,music_Box as musicBox FROM user where name like #{userName}
+	</select>
+
+	<!-- 方式3 依靠外部的 resultMap解决列名不匹配的另外一种方式 -->
+	<!-- id与result唯一不同：id 表示的结果将是当比较对象实例时用到的标识属性 -->
+	<resultMap id="userResultMap" type="User">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="pwd" column="pwd" />
+		<result property="musicBox" column="music_Box" />
+	</resultMap>
+	<select id="selectResultMapUser" resultMap="userResultMap">
+		select * from USER
+	</select>
+
+	<update id="updateUser" parameterType="Tip">
+		update user set
+		name=
+		#{name},
+		pwd = #{pwd},
+		music_Box
+		= #{musicBox}
+		where id=#{id}
+	</update>
+
+	<delete id="deleteUser" parameterType="int">
+		delete from user where id
+		= #{id}
+	</delete>
+
+
+	<!-- 首先，如果你的数据库支持自动生成主键的字段（比如 MySQL 和 SQL Server），那么你可以设置 useGeneratedKeys=”true”，然后再把 
+		keyProperty 设置到目标属性上就OK了。例如，如果上面的 Author 表已经对 id 使用了自动生成的列类型，那么语句可以修改为: -->
+	<insert id="insertUser" parameterType="User" useGeneratedKeys="true"
+		keyProperty="id">
+		insert
+		into USER(
+		name,
+		pwd,
+		music_Box
+		)
+		values
+		(
+		#{name},
+		#{pwd},
+		#{musicBox}
+		)
+	</insert>
+
+	<!-- 1.查询成一个map集合 只能 查询单条记录 -->
+	<!-- 2.参数类型 如string int 大小写不敏感 -->
+	<!-- 3.对于当个参数传递 -如parameterType="String" 此时这句话可写可不写，但是建议写 -->
+	<!-- 多个map -->
+	<select id="selectMapMuliUser" resultType="map">
+		SELECT * FROM user
+	</select>
+	<!-- 单个map -->
+	<select id="selectMapSingleUser" parameterType="String"
+		resultType="map">
+		SELECT * FROM user WHERE name like #{userName}
+	</select>
+
+</mapper>

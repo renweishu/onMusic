@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.avicit.onlinemusic.dao.MusicServiceDaoMapper">
+
+	<!-- 一对多关联查询 整理方式1 =========关联的嵌套结果 避免 “N+1 查询问题” -->
+	<select id="findByIdMusic" resultMap="musicResult"
+		parameterType="int">
+		select
+		m.id as id,
+		m.title as title,
+		m.singer as singer,
+		m.special as special,
+		m.value as value,
+		m.time as time,
+		m.click as click,
+		m.url as url,
+		m.user_id as userId,
+
+		c.id as cId,
+		c.value as cValue,
+		c.name
+		as cName,
+		c.music_id as cMusicId,
+		c.time as cTime
+
+		from music m left outer
+		join comments c
+		on m.id=c.music_id
+		where
+		m.id=#{musicId}
+	</select>
+
+	<select id="listMusic" resultMap="musicResult">
+		select
+		m.id
+		as id,
+		m.title
+		as
+		title,
+		m.singer as singer,
+		m.special as special,
+		m.value as value,
+		m.time
+		as time,
+		m.click as click,
+		m.url as url,
+		m.user_id as userId,
+
+		c.id
+		as cId,
+		c.value as cValue,
+		c.name as cName,
+		c.music_id as cMusicId,
+		c.time as
+		cTime 
+		from music m left outer join comments c
+		on
+		m.id=c.music_id
+		ORDER BY m.id DESC
+	</select>
+
+	<select id="listMusicByParam" resultMap="musicResult"
+		parameterType="string">
+		select
+		m.id as id,
+		m.title as title,
+		m.singer as singer,
+		m.special as special,
+		m.value as value,
+		m.time as time,
+		m.click as click,
+		m.url as url,
+		m.user_id as userId,
+
+		c.id as cId,
+		c.value as cValue,
+		c.name
+		as cName,
+		c.music_id as cMusicId,
+		c.time as cTime
+
+		from music m left outer
+		join comments c
+		on m.id=c.music_id
+		where
+		m.id in
+		<!--  <![CDATA[(]]> #{params} <![CDATA[)]]> 转义特殊字符  【备注】-->
+		<!-- item="params" 必须是输入参数 -->
+		<foreach collection="array" index="index" item="params"  open="(" separator="," close=")">
+		#{params}
+		</foreach>
+		
+	</select>
+
+
+	<resultMap id="musicResult" type="Music">
+		<id property="id" column="id" />
+		<result property="title" column="title" />
+		<result property="singer" column="singer" />
+		<result property="special" column="special" />
+		<result property="value" column="value" />
+		<result property="time" column="time" />
+		<result property="click" column="click" />
+		<result property="url" column="url" />
+		<result property="userId" column="userId" />
+		<!-- 备注1:property="listCommnet" 对应music对象里的List<Comments> listCommnet属性 -->
+		<!-- 备注2:column="id" 指music对象的id用于 一对多 关联Comments里的music_id -->
+		<!-- 备注3:javaType="Comments" 如果用关联的嵌套结果方式，一对多时 这儿类型用Comments或者list都可以 -->
+		<association property="listCommnet" column="id" javaType="Comments"
+			fetchType="lazy" resultMap="commentsResult" />
+	</resultMap>
+
+	<resultMap id="commentsResult" type="Comments">
+		<id property="id" column="cId" />
+		<result property="value" column="cValue" />
+		<result property="name" column="cName" />
+		<result property="musicId" column="cMusicId" />
+		<result property="time" column="cTime" />
+	</resultMap>
+
+
+	<!-- 分界线 -->
+	<update id="updateMusic" parameterType="Music">
+		update Music set
+		title=#{title},
+		singer=#{singer},
+		special=#{special},
+		value=#{value},
+		time=#{time},
+		click=#{click},
+		url=#{url},
+		user_id=#{userId}
+		where id=#{id}
+	</update>
+
+	<delete id="deleteMusic" parameterType="Music">
+		delete from Link Music id
+		=
+		#{id}
+	</delete>
+
+	<insert id="saveMusic" parameterType="Music" useGeneratedKeys="true"
+		keyProperty="id">
+		insert
+		into Music(
+		title,
+		singer,
+		special,
+		value,
+		time,
+		click,
+		url,
+		user_id
+		)
+		values
+		(
+		#{title},
+		#{singer},
+		#{special},
+		#{value},
+		#{time},
+		#{click},
+		#{url},
+		#{userId}
+		)
+	</insert>
+</mapper>
