@@ -137,8 +137,9 @@ public class UpLoadMusicController {
 				Date dt = new Date();
 				Random rd = new Random();
 
-				// 文件类型判断
-				if ("audio/mp3".equals(fileType)) {
+				// 文件类型判断  music.getContentType()获取文件格式时:
+				// goole浏览器上传mp3文件后台获得为"audio/mp3" 微软最新浏览器上传mp3文件后台获得为"audio/mpeg"
+				if ("audio/mp3".equals(fileType) || "audio/mpeg".equals(fileType)) {
 
 					if(music.isEmpty())continue;//可能会有三个上传表单却不一定三个都进行上传，这样其他的就为空需要判断  
 					// 保存文件
@@ -146,7 +147,7 @@ public class UpLoadMusicController {
 					FileUtils.copyInputStreamToFile(music.getInputStream(), saveFile);  
 				} else {
 					// 返回mp3文件上传页面 错误信息提示
-					attr.addFlashAttribute("error", "上传类型必须为MP3格式文件");
+					attr.addFlashAttribute("error", "上传类型必须为MP3格式文件 或者mpeg格式文件");
 					return "redirect:/uploadmusicPage";
 				}
 

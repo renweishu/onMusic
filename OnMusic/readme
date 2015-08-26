@@ -3,47 +3,5 @@
 1.技术构成 [springMVC+spring+mybatis]
 2.实现了多数据源切换
 3.
-----------------------
-注意点1：是不是使用spring AOP的功能，都要引入这aspectj，是依赖关系?
-      spring AOP就是用aspectj来实现的，是依赖关系！AspectJ是动态代理的一种实现！
-                  而spring默认使用的就是AspectJ来实现的动态代理，spring自己的AOP就是使用AspectJ来实现的！
-                  当然你也可以使用其他的实现，如cglib!
-      -----------------------------------------------------------
-                  你要使用spring的aop,要么引入aspectj,要么cglib!除非你不使用spring的aop! 
-                  当然，你也可以只用spring的其他特性，例如控制反转！aop不是只有spring有！其他框架也有
-                  ！你可以上网查查，不过spring的aop已经很好了！
-      -----------------------------------------------------------
-      AspectJ是一个面向方面的框架，它扩展了Java语言。
-      AspectJ定义了AOP语法所以它有一个专门的编译器用来生成遵守Java字节编码规范的Class文件。
-      
-注意点2：关于日志
---------------------------------------------------------------------
-org.apache.log4j.ConsoleAppender（控制台），
-org.apache.log4j.FileAppender（文件），【实例：继承FileAppender，重写日志输出规则，按照每天创建一个日期目录-RollingFileByDateAppender.java】
-org.apache.log4j.DailyRollingFileAppender（每天产生一个日志文件），
-org.apache.log4j.RollingFileAppender（文件大小到达指定尺寸的时候产生一个新的文件）
-org.apache.log4j.WriterAppender（将日志信息以流格式发送到任意指定的地方）
---------------------------------------------------------------------
-实例配置说明:
-#根日志记录器 具体语法 log4j.rootLogger = [ level ] , appenderName, appenderName, …
-#定义根日志记录器 级别为INFO级别，定义指定多个输出目的地file,errorFile,stdout
-log4j.rootLogger=INFO,file,errorFile,stdout
-
-# 配置记录MyBatis 详细执行日志记录，比如把执行的sql语句打印在控制台 
-#定义两个子日志记录器，专门记录mybatis的执行记录，定义日志级别为bebug，输出到控制台
-#指定com.avicit.onlinemusic.daot包下的所有类的等级为DEBUG
-log4j.logger.com.avicit.onlinemusic.dao=DEBUG,stdout
-log4j.logger.com.avicit.onlinemusic.daotwo=DEBUG,stdout
-
-# 输出到控制台-------------------------------------------------------
-log4j.appender.stdout=org.apache.log4j.ConsoleAppender
-log4j.appender.stdout.encoding=GBK
-log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
-log4j.appender.stdout.layout.ConversionPattern=%d %p [%c] - %m%n
-log4j.appender.stdout.Threshold=DEBUG [备注：指定日志消息的输出最低层次,根日志记录器的全局级别是info，但是子记录器的级别是debug，同时指定控制台输出，所以这儿应设置为debug]
-log4j.appender.stdout.Target=System.out[备注:System.err：默认情况下是：System.out,指定输出控制台]
-
-#log4j.appender.Root.DatePattern='_'yyyy-MM-dd'.log'[log4j会先生成blog这样一个文件，然后当这一天过去的时候，生成一个新的blog，然后把原来的保存为加上日期格式后缀的文件]
-
 
 

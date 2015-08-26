@@ -1,0 +1,12 @@
+按照我的理解，现在互联网主流技术框架有以下几点： 
+0、反向代理和web服务器集群架构 
+1、缓存框架memcache等 
+2、noSql 
+3、模板技术 
+4、ssi，互联网估计很少用hibernate 
+5、zookeeper分布式协作框架 
+6、消息框架rabbitmq、activemq等 
+7、通讯框架mina、netty、hession 
+8、前端框架jquery、extjs等 
+-----------------------------
+mongo是文档型的nosql，redis是K-V型的。
