@@ -70,7 +70,7 @@ public class IndexController {
 	 * @return
 	 */
 	@RequestMapping
-	public String indexPageExecute(Model model,HttpSession session,HttpServletRequest request,RedirectAttributes attr){
+	public String indexPageExecute (Model model,HttpSession session,HttpServletRequest request,RedirectAttributes attr){
 		System.out.println("============================="+request.getAttribute("error"));
 		logger.info("****************************************************************");
 		logger1.info("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");

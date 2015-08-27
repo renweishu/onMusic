@@ -10,6 +10,9 @@
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 
+	<!-- 通过在你的Spring的配置中引入下列元素来启用Spring对@AspectJ的支持： -->
+	<!-- 引入两个AspectJ库：aspectjweaver.jar和aspectjrt.jar -->
+	<aop:aspectj-autoproxy />
 
 
 	<!--【数据源1】 开 启 Spring 的 事 务 处 理 标准配置 管理数据源1 -->
@@ -32,11 +35,14 @@
 		</tx:attributes>
 	</tx:advice>
 
-		<!-- 用一个通知器（advisor）把这个切面与 事务通知 绑定在一起 || 定义了 一个切面  注意星号后面要有个空格-->
+	<!-- 用一个通知器（advisor）把这个切面与 事务通知 绑定在一起 || 定义了 一个切面 注意星号后面要有个空格 -->
 	<aop:config proxy-target-class="true">
-		<aop:pointcut id="allControllerOperation" expression="execution(* com.avicit.onlinemusic.controller.*Controller.*(..))" />
-		<aop:advisor advice-ref="testInterceptor" pointcut-ref="allControllerOperation" order="1" />
-		<aop:advisor advice-ref="transactionInterceptor" pointcut-ref="allControllerOperation" order="2" />
+		<aop:pointcut id="allControllerOperation"
+			expression="execution(* com.avicit.onlinemusic.controller.*Controller.*(..))" />
+		<aop:advisor advice-ref="testInterceptor" pointcut-ref="allControllerOperation"
+			order="1" />
+		<aop:advisor advice-ref="transactionInterceptor"
+			pointcut-ref="allControllerOperation" order="2" />
 	</aop:config>
 
 
