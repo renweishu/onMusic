@@ -1,0 +1,42 @@
+事务配置:
+方式一  xml配置-------------------------------------------------------------------
+	<!--【数据源1】 开 启 Spring 的 事 务 处 理 标准配置 管理数据源1 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- 定义一个事务通知，管理者为transactionManager -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="infoUpload" propagation="REQUIRED"/>
+			<!-- <tx:method name="*" /> -->
+		</tx:attributes>
+	</tx:advice>
+
+	<aop:config>
+		<!-- 定义了 一个切面，它匹配 FooService 接口定义的所有操作， 我们把该切面叫做 'allServiceOperation' -->
+		<aop:pointcut id="allServiceOperation"
+			expression="execution(* com.avicit.onlinemusic.controller.UpLoadMusicController.*(..))" />
+		<!-- 用一个通知器（advisor）把这个切面与 'txAdvice' 绑定在一起， 表示当 'fooServiceOperation' 
+			执行时，'txAdvice' 定义的通知逻辑将被执行。 -->
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="allServiceOperation" />
+	</aop:config>
+
+
+方式二 java代码中@Transactional--------------------------------------------------------------------
+ @Transactional
+public class DefaultFooService implements FooService {
+
+  Foo getFoo(String fooName);
+
+  Foo getFoo(String fooName, String barName);
+
+  void insertFoo(Foo foo);
+
+  void updateFoo(Foo foo);
+ Java源代码中声明事务语义的做法让事务声明和将受其影响的代码距离更近了，而且一般来说不会有不恰当的耦合的风险，因为，使用事务性的代码几乎总是被部署在事务环境中。 
+   如果使用@Transactional
+ xml文件中必须配置<tx:annotation-driven transaction-manager="txManager"/>
+ -----------------------------------------------------------------------------------
+ 
