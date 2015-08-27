@@ -18,21 +18,29 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
+
+	<!-- aop拦截器的测试 -->
+	<bean id="testInterceptor"
+		class="com.avicit.framework.util.aop.interceptors.TestInterceptor" />
+
 	<!-- 定义一个事务通知，管理者为transactionManager -->
-	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+	<tx:advice id="transactionInterceptor" transaction-manager="transactionManager">
 		<tx:attributes>
-			<tx:method name="infoUpload" propagation="REQUIRED"/>
-			<!-- <tx:method name="*" /> -->
+			<!-- 所有controller里的方法都是Execute结尾 -->
+			<tx:method name="*Execute" propagation="REQUIRED"
+				rollback-for="java.lang.Exception" />
 		</tx:attributes>
 	</tx:advice>
 
 	<aop:config>
-		<!-- 定义了 一个切面，它匹配 FooService 接口定义的所有操作， 我们把该切面叫做 'allServiceOperation' -->
-		<aop:pointcut id="allServiceOperation"
-			expression="execution(* com.avicit.onlinemusic.controller.UpLoadMusicController.*(..))" />
-		<!-- 用一个通知器（advisor）把这个切面与 'txAdvice' 绑定在一起， 表示当 'fooServiceOperation' 
-			执行时，'txAdvice' 定义的通知逻辑将被执行。 -->
-		<aop:advisor advice-ref="txAdvice" pointcut-ref="allServiceOperation" />
+		<!-- 定义了 一个切面  注意星号后面要有个空格-->
+		<aop:pointcut id="allControllerOperation"
+			expression="execution(* com.avicit.onlinemusic.controller.*Controller.*(..))" />
+		<aop:advisor pointcut-ref="allControllerOperation"
+			advice-ref="testInterceptor" order="1" />
+		<!-- 用一个通知器（advisor）把这个切面与 事务通知 绑定在一起 -->
+		<aop:advisor advice-ref="transactionInterceptor"
+			pointcut-ref="allControllerOperation" order="2" />
 	</aop:config>
 
 

@@ -6,4 +6,8 @@ AOP实现功能点:
 			}
   异常处理的地方做特殊处理，让他们统一跳转到error界面；
   
+  2.当每次用户登录 或者 退出时，
+         即userLoginExecute和userLoginOutExecute方法 进行一次日志打印
+        也可以在数据库中登记一次
+  
   

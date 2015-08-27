@@ -61,7 +61,7 @@ public class MusicBoxController {
 	 * @throws UnsupportedEncodingException 
 	 */
 	@RequestMapping(value="musicbox",method = RequestMethod.GET)
-	public String  musicbox(Model model,HttpSession session,HttpServletRequest request,RedirectAttributes attr) throws UnsupportedEncodingException{
+	public String  musicboxExecute(Model model,HttpSession session,HttpServletRequest request,RedirectAttributes attr) throws UnsupportedEncodingException{
 
 		/*从session中或者用户名*/
 		/*1.先从session中取用户对象*/
@@ -111,7 +111,7 @@ public class MusicBoxController {
 	 * @throws UnsupportedEncodingException 
 	 */
 	@RequestMapping(value="addtobox",method = RequestMethod.GET)
-	public @ResponseBody Object addtoBox(HttpServletRequest request,HttpSession session) throws UnsupportedEncodingException{
+	public @ResponseBody Object addtoBoxExecute(HttpServletRequest request,HttpSession session) throws UnsupportedEncodingException{
 		try {
 			//这两个字段来拿测试用
 			String music_id = request.getParameter("music_id");
@@ -163,7 +163,7 @@ public class MusicBoxController {
 	 * @return
 	 */
 	@RequestMapping(value="setbox",method = RequestMethod.POST)
-	public String delmessage(Model model,HttpServletRequest request,RedirectAttributes attr,HttpSession session){
+	public String delmessageExecute(Model model,HttpServletRequest request,RedirectAttributes attr,HttpSession session){
 
 		String[] musicBoxArr =(String[])request.getParameterValues("list");
 		String option =(String)request.getParameter("select");

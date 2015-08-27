@@ -44,7 +44,13 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value="login",method = RequestMethod.POST)
-	public String userLogin(@ModelAttribute("userVo") UserVo userVo,RedirectAttributes attr,BindingResult binding,HttpSession session){
+	public String userLoginExecute(@ModelAttribute("userVo") UserVo userVo,RedirectAttributes attr,BindingResult binding,HttpSession session){
+
+        System.out.println("======================================================");
+        System.out.println("==                                                  ==");
+        System.out.println("==AOP测试   登录测试                                                                                                                  ==");
+        System.out.println("==                                                  ==");
+        System.out.println("======================================================");
 
 		// 用户登录form 框验证 出错时
 		if(binding.hasErrors()){
@@ -90,7 +96,7 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value="logout",method = RequestMethod.GET)
-	public String userLoginOut(HttpSession session){
+	public String userLoginOutExecute(HttpSession session){
 
 		// 可以作为内部转发传递值
 		// ModelAndView mav = new ModelAndView();
@@ -114,7 +120,7 @@ public class UserController {
 	 * @throws UnsupportedEncodingException 
 	 */
 	@RequestMapping(value="addUser",method = RequestMethod.POST)
-	public @ResponseBody Object userRegister(HttpServletRequest request) throws UnsupportedEncodingException{
+	public @ResponseBody Object userRegisterExecute(HttpServletRequest request) throws UnsupportedEncodingException{
 		//这两个字段来拿测试用
 		String jsonUser1 = request.getParameter("name");
 		String jsonUser2 = request.getParameter("location");

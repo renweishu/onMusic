@@ -73,7 +73,7 @@ public class MessageController {
 	 * @return
 	 */
 	@RequestMapping(value="message")
-	public String messagePage(Model model,HttpSession session,HttpServletRequest request,RedirectAttributes attr){
+	public String messagePageExecute(Model model,HttpSession session,HttpServletRequest request,RedirectAttributes attr){
 
 		/*从session中或者用户名*/
 		/*1.先从session中取用户对象*/
@@ -105,7 +105,7 @@ public class MessageController {
 	 * @return
 	 */
 	@RequestMapping(value="showmessage")
-	public String showMessage(Model model,HttpServletRequest request){
+	public String showMessageExecute(Model model,HttpServletRequest request){
 
 		String messageId = request.getParameter("id");
 		System.out.println(messageId);
@@ -125,7 +125,7 @@ public class MessageController {
 	 * @throws UnsupportedEncodingException 
 	 */
 	@RequestMapping(value="ktvMusicMessage",method = RequestMethod.POST)
-	public @ResponseBody Object ktvMusicMessage(HttpServletRequest request,HttpSession session) throws UnsupportedEncodingException{
+	public @ResponseBody Object ktvMusicMessageExecute(HttpServletRequest request,HttpSession session) throws UnsupportedEncodingException{
 		//这两个字段来拿测试用
 		String jsonUser1 = request.getParameter("name");
 		String jsonUser2 = request.getParameter("location");
@@ -216,7 +216,7 @@ public class MessageController {
 	 * @return
 	 */
 	@RequestMapping(value="sendmessage")
-	public String sendmessage(@ModelAttribute("messageVo") MessageVo messageVo,HttpSession session,RedirectAttributes attr,Model model,HttpServletRequest request){
+	public String sendmessageExecute(@ModelAttribute("messageVo") MessageVo messageVo,HttpSession session,RedirectAttributes attr,Model model,HttpServletRequest request){
 
 		try {
 			/*内容验证*/
@@ -280,7 +280,7 @@ public class MessageController {
 	 * @return
 	 */
 	@RequestMapping(value="delmessage")
-	public String delmessage(Model model,HttpServletRequest request){
+	public String delmessageExecute(Model model,HttpServletRequest request){
 		try {
 			String[] delIds =(String[])request.getParameterValues("list");
 			Message message=null;

@@ -63,7 +63,7 @@ public class CommentsController {
 	 * @return
 	 */
 	@RequestMapping(value="comments",method = RequestMethod.GET)
-	public String indexPage(Model model,HttpSession session,HttpServletRequest request,RedirectAttributes attr){
+	public String indexPageExecute(Model model,HttpSession session,HttpServletRequest request,RedirectAttributes attr){
 
 		// 获取音乐ID
 		String musicID = request.getParameter("musicID");
@@ -109,7 +109,7 @@ public class CommentsController {
 		 * @return
 		 */
 		@RequestMapping(value="commects_ajax",method = RequestMethod.GET)
-		public String musiclist(Model model,HttpServletRequest request){
+		public String musiclistExecute(Model model,HttpServletRequest request){
 	        // 获取音乐ID
 			String musicID = request.getParameter("musicID");
 			// 获取当前音乐
@@ -127,7 +127,7 @@ public class CommentsController {
 		 * @return
 		 */
 		@RequestMapping(value="addcomments",method = RequestMethod.POST)
-		public String addcomments(RedirectAttributes attr,Model model,HttpServletRequest request){
+		public String addcommentsExecute(RedirectAttributes attr,Model model,HttpServletRequest request){
 			
 			String musicid =request.getParameter("musicid");
 			String name =request.getParameter("name");

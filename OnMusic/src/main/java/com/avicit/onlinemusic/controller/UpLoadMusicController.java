@@ -80,7 +80,7 @@ public class UpLoadMusicController {
 	 * @return
 	 */
 	@RequestMapping(value="uploadmusicPage")
-	public String indexPage(Model model,HttpSession session,HttpServletRequest request,RedirectAttributes attr){
+	public String indexPageExecute(Model model,HttpSession session,HttpServletRequest request,RedirectAttributes attr){
 
 		/*1.先从session中取用户对象*/
 		User PlutoUser=(User)session.getAttribute("PlutoUser");	
@@ -123,7 +123,7 @@ public class UpLoadMusicController {
 	 * @return 
 	 */  
 	@RequestMapping(value = "uploadmusic",method = RequestMethod.POST)  
-	public String uploadPhoto(@RequestParam(required = false)MultipartFile[] musics,Model model,HttpServletRequest req,RedirectAttributes attr){  
+	public String uploadPhotoExecute(@RequestParam(required = false)MultipartFile[] musics,Model model,HttpServletRequest req,RedirectAttributes attr){  
 		// 文件存放路径
 		String realpath = req.getSession().getServletContext().getRealPath("/upload/");  
 		File saveFile=null;
@@ -167,7 +167,7 @@ public class UpLoadMusicController {
 	 * @return
 	 */
 	@RequestMapping(value="infoupload",method = RequestMethod.POST)
-	public String infoUpload(@ModelAttribute("musicVo") MusicVo musicVo,HttpSession session,RedirectAttributes attr){
+	public String infoUploadExecute(@ModelAttribute("musicVo") MusicVo musicVo,HttpSession session,RedirectAttributes attr){
 
 		String title = musicVo.getTitle();
 		String singer= musicVo.getSinger();

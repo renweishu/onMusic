@@ -61,7 +61,7 @@ public class IndexController {
 	 * @return
 	 */
 	@RequestMapping
-	public String indexPage(Model model,HttpSession session,HttpServletRequest request,RedirectAttributes attr){
+	public String indexPageExecute(Model model,HttpSession session,HttpServletRequest request,RedirectAttributes attr){
 		System.out.println("============================="+request.getAttribute("error"));
 
 		/*从session中或者用户名*/
@@ -94,7 +94,7 @@ public class IndexController {
 	 * @return
 	 */
 	@RequestMapping(value="/index_ajax")
-	public String musiclist(Model model,HttpServletRequest request){
+	public String musiclistExecute(Model model,HttpServletRequest request){
 
 		String page = request.getParameter("page");
 		System.out.println(page);
