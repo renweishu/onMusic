@@ -18,26 +18,23 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-	<!-- 其中的 'transaction-manager' 属性被设置为一个指向 PlatformTransactionManager bean的名字 -->
-	<!-- （这里指 'transactionManager'）， 该bean将会真正管理事务。 -->
-	<!-- <tx:advice id="defaultTxAdvice" transaction-manager="transactionManager">
+	<!-- 定义一个事务通知，管理者为transactionManager -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
-			<tx:method name="list*" read-only="true" />
-			<tx:method name="find*" read-only="true" />
-			<tx:method name="save*" read-only="false" />
-			<tx:method name="delete*" read-only="false" />
-			<tx:method name="update*" read-only="false" />
-			<tx:method name="*" />
+			<tx:method name="infoUpload" propagation="REQUIRED"/>
+			<!-- <tx:method name="*" /> -->
 		</tx:attributes>
 	</tx:advice>
 
 	<aop:config>
-		<aop:pointcut id="defaultServiceOperation"
-			expression="execution(com.avicit.onlinemusic.service.*(..))" />
+		<!-- 定义了 一个切面，它匹配 FooService 接口定义的所有操作， 我们把该切面叫做 'allServiceOperation' -->
+		<aop:pointcut id="allServiceOperation"
+			expression="execution(* com.avicit.onlinemusic.controller.UpLoadMusicController.*(..))" />
+		<!-- 用一个通知器（advisor）把这个切面与 'txAdvice' 绑定在一起， 表示当 'fooServiceOperation' 
+			执行时，'txAdvice' 定义的通知逻辑将被执行。 -->
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="allServiceOperation" />
+	</aop:config>
 
-		<aop:advisor pointcut-ref="defaultServiceOperation"
-			advice-ref="defaultTxAdvice" />
-	</aop:config> -->
 
 
 	<!-- *******************************************数据源1和2 分界线***************************************************** -->

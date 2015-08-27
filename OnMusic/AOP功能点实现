@@ -1,0 +1,7 @@
+AOP实现功能点:
+1.在所有代码中 当执行
+  try()catch (Exception e) {
+				// TODO 对于异常需要处理
+				e.printStackTrace();
+			}
+  异常处理的地方做特殊处理，让他们统一跳转到error界面；

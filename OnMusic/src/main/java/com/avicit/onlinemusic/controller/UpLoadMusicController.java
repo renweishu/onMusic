@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -225,6 +226,10 @@ public class UpLoadMusicController {
 			} catch (Exception e) {
 				// TODO 对于异常需要处理
 				e.printStackTrace();
+				System.out.println("事务回滚了吗？------------------");
+				//编程式 方式来指定回滚事务。 虽然写法非常的简单，但是这个方法是高侵入性的，并且使你的代码与Spring框架的事务架构高度耦合
+				//TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+
 			}
 
 		}
