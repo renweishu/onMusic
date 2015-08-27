@@ -26,24 +26,28 @@ import org.apache.commons.logging.LogFactory;
 public class TestInterceptor implements MethodInterceptor {
 
 
-    @Override
-    public Object invoke(MethodInvocation invocation) throws Throwable {
-        // CHECKSTYLEON
-        Object result = null;
-        try {
-            result = invocation.proceed();
-            
-            System.out.println("======================================================");
-            System.out.println("==                                                  ==");
-            System.out.println("==AOP测试                                                                                                                                    ==");
-            System.out.println("==                                                  ==");
-            System.out.println("======================================================");
-            
-            // CHECKSTYLEOFF
-        } catch (Throwable e) {
+	@Override
+	public Object invoke(MethodInvocation invocation) throws Throwable {
+		System.out.println("======================================================");
+		System.out.println("==                                                  ==");
+		System.out.println("==AOP-MethodInterceptor测试                                                                               ==");
+		System.out.println("==                                                  ==");
+		System.out.println("======================================================");
 
-            throw e;
-        }
-        return result;
-    }
+
+		Object result = null;
+		try {
+			result = invocation.proceed();
+			String info = invocation.getMethod().getDeclaringClass()+ "." +   
+					invocation.getMethod().getName() + "()";  
+			System.out.println(info);  
+
+
+			// CHECKSTYLEOFF
+		} catch (Throwable e) {
+
+			throw e;
+		}
+		return result;
+	}
 }

@@ -5,6 +5,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,6 +43,12 @@ import com.avicit.onlinemusic.vo.TipVo;
 @RequestMapping(value="index")
 public class IndexController {
 
+	/**
+	 * 日志 两种测试
+	 */
+	private static org.slf4j.Logger logger = LoggerFactory.getLogger(IndexController.class);
+	private static Log logger1 = LogFactory.getLog(IndexController.class);
+
 	@Autowired
 	private MusicService musicService;
 	@Autowired
@@ -63,7 +72,8 @@ public class IndexController {
 	@RequestMapping
 	public String indexPageExecute(Model model,HttpSession session,HttpServletRequest request,RedirectAttributes attr){
 		System.out.println("============================="+request.getAttribute("error"));
-
+		logger.info("****************************************************************");
+		logger1.info("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 		/*从session中或者用户名*/
 		/*1.先从session中取用户对象*/
 		User PlutoUser=(User)session.getAttribute("PlutoUser");	
