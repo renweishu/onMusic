@@ -81,6 +81,7 @@
 			<artifactId>aspectjweaver</artifactId>
 			<version>1.5.3</version>
 		</dependency>
+		<!-- 感觉以下两个包aop时可要可不要 待确定 -->
 		<dependency>
 			<groupId>aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>

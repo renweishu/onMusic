@@ -1,0 +1,36 @@
+AOP在spring的controller里无效的问题：
+-----------------------------------------------------
+-applicationContext.xml和servlet.xml都有各自的上下文。
+-所以在Controller上AOP，需要把AOP配置写在servlet.xml里。 
+-----------------------------------------------------
+1.http://blog.csdn.net/z69183787/article/details/37819831
+
+Spring容器优先加载由ServletContextListener（对应applicationContext.xml）产生的父容器，
+而SpringMVC（对应mvc_dispatcher_servlet.xml）产生的是子容器。
+子容器Controller进行扫描装配时装配的@Service注解的实例是没有经过事务加强处理，
+即没有事务处理能力的Service，而父容器进行初始化的Service是保证事务的增强处理能力的。
+如果不在子容器中将Service exclude掉，此时得到的将是原样的无事务处理能力的Service。
+
+（ update 2014.05.27  今天看见一种说法：key word =双亲上下文。不使用ContextLoaderListener监听器来加载spring的配置，
+改用DispatcherServlet来加载spring的配置，不要双亲上下文，只使用一个DispatcherServlet就不会出现上述问题。
+笔者这里未测过这个办法，因为我自己的业务需要一个extends ContextLoaderListener的selfListener，
+有兴趣的朋友可以自己测试下这个说法，并欢迎把测试的结果与我交流 ：） ）
+
+经过以上分析，故可以优化上述配置：
+在 applicationContext.xml增加：
+
+[html] view plaincopy在CODE上查看代码片派生到我的代码片 
+
+01. <context:component-scan base-package="com.will">   
+02. </context:component-scan>  
+
+在 Spring mvc.dispatcher.xml增加： 
+
+[html] view plaincopy在CODE上查看代码片派生到我的代码片 
+
+01. <context:component-scan base-package="com.will" >      
+02.     <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service" />    
+03. </context:component-scan>  
+
+经过如上配置，可以发现事务控制部分的日志如下：
+

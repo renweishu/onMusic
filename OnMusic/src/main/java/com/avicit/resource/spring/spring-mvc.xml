@@ -18,16 +18,19 @@
 
 	<!-- 方式1 扫描文件（自动将servicec controller层注入）使用 context:include-filter过滤注入类型 -->
 	<!-- 在spring-mvc.xml 配置文件中，只扫描controller（controller层注入）配置注解扫描的包路径 ，主要针对action -->
-	<context:component-scan base-package="com.avicit" use-default-filters="false">
+	<context:component-scan base-package="com.avicit"
+		use-default-filters="false">
 		<context:include-filter type="annotation"
 			expression="org.springframework.stereotype.Controller" />
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Service" />
 	</context:component-scan>
 
 
 	<!-- 上传文件时需要做的配置 定义最大文件上传尺寸 -->
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<!-- 设置单个文件不超过20M  计算为20*1024*1024=20971520 -->
+		<!-- 设置单个文件不超过20M 计算为20*1024*1024=20971520 -->
 		<property name="maxUploadSize" value="20971520"></property>
 	</bean>
 
@@ -41,7 +44,7 @@
 		</property>
 	</bean>
 
-	<!-- 这个配置告诉spring 静态资源的处理方式  以便能够请求 到 css、 js、 jpg等资源文件-->
+	<!-- 这个配置告诉spring 静态资源的处理方式 以便能够请求 到 css、 js、 jpg等资源文件 -->
 	<mvc:resources mapping="/**" location="/" />
 
 	<!-- 1、重定向 ||即如果当前路径是/ 则重定向到/index -->

@@ -36,8 +36,6 @@
 	<!-- 扫描@Component、 @Repository、@Service或 @Controller的类的自动检测。 如果use-default-filters="false" 
 		可以禁用默认的过滤器 -->
 	<context:component-scan base-package="com.avicit">
-		<context:exclude-filter type="annotation"
-			expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
 
 
