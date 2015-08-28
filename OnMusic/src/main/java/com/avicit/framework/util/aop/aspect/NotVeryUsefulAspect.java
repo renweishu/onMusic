@@ -1,6 +1,7 @@
 package com.avicit.framework.util.aop.aspect;
 
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 
 /**
@@ -11,7 +12,7 @@ import org.aspectj.lang.annotation.Pointcut;
 public class NotVeryUsefulAspect {
 	
 	//@Pointcut("execution(* com.avicit.onlinemusic.controller.*Controller.*(..))")
-	@Pointcut("execution（* indexPageExecute (..))")// 这个切入点将匹配任何名为 "indexPageExecute" 的方法的执行：
+	@Before("execution(* *Execute (..))")// 这个切入点将匹配任何名为 "indexPageExecute" 的方法的执行：
 
 	public void test(){
 		System.out.println("======================================================");
