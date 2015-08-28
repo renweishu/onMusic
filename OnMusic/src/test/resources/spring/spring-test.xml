@@ -21,6 +21,7 @@
 	
 	<!-- 声明一个切面 -->
 	<bean id="myAspect" class="test.spring.TestUsefulAspect"/>
+	<bean id="aspect1" class="com.avicit.framework.util.aop.aspect.NotVeryUsefulAspect"/>
 
 	
 

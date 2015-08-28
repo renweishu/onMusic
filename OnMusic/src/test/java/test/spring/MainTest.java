@@ -3,7 +3,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-public class AsTest {
+public class MainTest {
 
 	private Person person;
 
@@ -23,5 +23,6 @@ public class AsTest {
 	@Test
 	public void test1(){
 		person.sayBye();
+		person.doExecute();
 	}
 }

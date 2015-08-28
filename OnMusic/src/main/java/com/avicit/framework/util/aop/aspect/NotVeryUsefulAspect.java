@@ -12,12 +12,12 @@ import org.aspectj.lang.annotation.Pointcut;
 public class NotVeryUsefulAspect {
 	
 	//@Pointcut("execution(* com.avicit.onlinemusic.controller.*Controller.*(..))")
-	@Before("execution(* indexPageExecute (..))")// 这个切入点将匹配任何名为 "indexPageExecute" 的方法的执行：
+	@Before("execution(* *Execute*(..))")// 这个切入点将匹配任何名为 "indexPageExecute" 的方法的执行：
 
 	public void test(){
 		System.out.println("======================================================");
 		System.out.println("==                                                  ==");
-		System.out.println("==@Aspect-测试                                                                                                                      ==");
+		System.out.println("==@Aspect-web测试                                                                                                             ==");
 		System.out.println("==                                                  ==");
 		System.out.println("======================================================");
 
