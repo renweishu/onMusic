@@ -81,6 +81,12 @@
 			<artifactId>aspectjweaver</artifactId>
 			<version>1.5.3</version>
 		</dependency>
+		<dependency>
+			<groupId>aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>1.5.3</version>
+		</dependency>
+
 
 		<!-- hibernate start -->
 
@@ -99,7 +105,7 @@
 			<version>1.2.2</version>
 		</dependency>
 		<!-- DB2 驱动包 -->
-		<dependency>		
+		<dependency>
 			<groupId>cn.guoyukun.jdbc</groupId>
 			<artifactId>db2jcc</artifactId>
 			<version>1.4.2</version>
