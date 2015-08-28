@@ -12,18 +12,17 @@
 
 	<!-- 通过在你的Spring的配置中引入下列元素来启用Spring对@AspectJ的支持： -->
 	<!-- 引入两个AspectJ库：aspectjweaver.jar和aspectjrt.jar -->
-	
 	<aop:aspectj-autoproxy />
 
-
-
+	<!-- 业务测试bean -->
 	<bean id="student" class="test.spring.Student" />
-	
-	<!-- 声明一个切面 -->
-	<bean id="myAspect" class="test.spring.TestUsefulAspect"/>
-	<bean id="aspect1" class="com.avicit.framework.util.aop.aspect.NotVeryUsefulAspect"/>
 
-	
+	<!-- 声明两个切面 -->
+	<bean id="myAspect1" class="test.spring.TestUsefulAspect" />
+	<bean id="myAspect2"
+		class="com.avicit.framework.util.aop.aspect.NotVeryUsefulAspect" />
+
+
 
 
 </beans>

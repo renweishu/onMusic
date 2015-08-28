@@ -17,6 +17,7 @@ public class MainTest {
 
 
 	/**
+	 * 测试被spring管理的bean
 	 * 测试aspactj的功能实现
 	 * 
 	 */
@@ -24,5 +25,17 @@ public class MainTest {
 	public void test1(){
 		person.sayBye();
 		person.doExecute();
+	}
+	
+	/**
+	 * 测试不被spring容器管理的bean  
+	 * 测试aspactj的功能实现
+	 * 结果显示:这个时候切面无效
+	 */
+	@Test
+	public void test2(){
+		Student2 st2 = new Student2();
+		st2.sayBye();
+		st2.doExecute();
 	}
 }
