@@ -12,9 +12,17 @@
 
 	<!-- 通过在你的Spring的配置中引入下列元素来启用Spring对@AspectJ的支持： -->
 	<!-- 引入两个AspectJ库：aspectjweaver.jar和aspectjrt.jar -->
+	<!-- 通过aop命名空间的<aop:aspectj-autoproxy />声明自动为spring容器中那些配置@aspectJ切面的bean创建代理，织入切面。当然，spring 
+		在内部依旧采用AnnotationAwareAspectJAutoProxyCreator进行自动代理的创建工作，但具体实现的细节已经被aop:aspectj-autoproxy 
+		隐藏起来了 <aop:aspectj-autoproxy />有一个proxy-target-class属性，默认为false，表示使用jdk动态代理织入增强，当配为<aop:aspectj-autoproxy 
+		poxy-target-class="true"/>时，表示使用CGLib动态代理技术织入增强。不过即使proxy-target-class设置为false， 
+		如果目标类没有声明接口，则spring将自动使用CGLib动态代理。 -->
+	<!-- 如果在springmvc子上下文中配置了aop:aspectj-autoproxy，那么这儿可要可不要 -->
 	<aop:aspectj-autoproxy />
+
 	<!-- 声明一个切面 -->
-	<bean id="aspect1" class="com.avicit.framework.util.aop.aspect.NotVeryUsefulAspect"/>
+	<bean id="aspect1"
+		class="com.avicit.framework.util.aop.aspect.NotVeryUsefulAspect" />
 
 	<!--【数据源1】 开 启 Spring 的 事 务 处 理 标准配置 管理数据源1 -->
 	<bean id="transactionManager"
@@ -37,10 +45,9 @@
 	</tx:advice>
 
 	<!-- 用一个通知器（advisor）把这个切面与 事务通知 绑定在一起 || 定义了 一个切面 注意星号后面要有个空格 -->
-	<!--  execution(* com.avicit.onlinemusic.controller.*Controller.*(..)) -->
+	<!-- execution(* com.avicit.onlinemusic.controller.*Controller.*(..)) -->
 	<aop:config proxy-target-class="true">
-		<aop:pointcut id="allControllerOperation"
-			expression="bean(*Controller*)" />
+		<aop:pointcut id="allControllerOperation" expression="bean(*Controller*)" />
 		<aop:advisor advice-ref="testInterceptor" pointcut-ref="allControllerOperation"
 			order="1" />
 		<aop:advisor advice-ref="transactionInterceptor"

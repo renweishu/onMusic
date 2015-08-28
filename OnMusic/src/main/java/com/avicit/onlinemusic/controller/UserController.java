@@ -46,12 +46,6 @@ public class UserController {
 	@RequestMapping(value="login",method = RequestMethod.POST)
 	public String userLoginExecute(@ModelAttribute("userVo") UserVo userVo,RedirectAttributes attr,BindingResult binding,HttpSession session){
 
-        System.out.println("======================================================");
-        System.out.println("==                                                  ==");
-        System.out.println("==AOP测试   登录测试                                                                                                                  ==");
-        System.out.println("==                                                  ==");
-        System.out.println("======================================================");
-
 		// 用户登录form 框验证 出错时
 		if(binding.hasErrors()){
 			return "redirect:/index";
