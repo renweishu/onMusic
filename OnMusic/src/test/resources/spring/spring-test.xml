@@ -10,6 +10,9 @@
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 
+
+		
+
 	<!-- 通过在你的Spring的配置中引入下列元素来启用Spring对@AspectJ的支持： -->
 	<!-- 引入两个AspectJ库：aspectjweaver.jar和aspectjrt.jar -->
 	<aop:aspectj-autoproxy />
