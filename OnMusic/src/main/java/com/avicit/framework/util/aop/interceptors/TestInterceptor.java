@@ -12,8 +12,8 @@ package com.avicit.framework.util.aop.interceptors;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 
 /**
  * [機 能]：排他制御
@@ -24,6 +24,10 @@ import org.apache.commons.logging.LogFactory;
  * @version $Revision$
  */
 public class TestInterceptor implements MethodInterceptor {
+	/**
+	 * 日志 两种测试
+	 */
+	private static org.slf4j.Logger logger = LoggerFactory.getLogger(TestInterceptor.class);
 
 
 	@Override
@@ -40,14 +44,25 @@ public class TestInterceptor implements MethodInterceptor {
 			result = invocation.proceed();
 			String info = invocation.getMethod().getDeclaringClass()+ "." +   
 					invocation.getMethod().getName() + "()";  
-			System.out.println(info);  
+			System.out.println("使用拦截器的方式实现一个aop："+info);  
 
 
 			// CHECKSTYLEOFF
 		} catch (Throwable e) {
 
-			throw e;
+            // 插入数据库 数据长度过长
+            if (e instanceof DataIntegrityViolationException) {
+            	logger.info("插入数据出现异常:"+e.getMessage());
+//                BLogicMessages messages = new BLogicMessages();
+//                messages.add(DproCommonConsts.MESSAGE_TYPE, new BLogicMessage(DproMessageConsts.A0281));
+//                throw new ValidationException(messages);
+            	
+            }
+            throw e;
+        
+			
 		}
-		return result;
+		return result;   
+		
 	}
 }

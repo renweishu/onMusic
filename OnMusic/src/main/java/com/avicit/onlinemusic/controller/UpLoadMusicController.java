@@ -233,8 +233,8 @@ public class UpLoadMusicController {
 				tipService.save(tip);
 			} catch (Exception e) {
 				// TODO 对于异常需要处理
-				e.printStackTrace();
-				System.out.println("事务回滚了吗？------------------");
+				//e.printStackTrace();
+				System.out.println("由于配置AOP事务管理-此所有对数据库更新会事务回滚******************------------------");
 				//编程式 方式来指定回滚事务。 虽然写法非常的简单，但是这个方法是高侵入性的，并且使你的代码与Spring框架的事务架构高度耦合
 				//TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 				/*=====================================================================================*/
