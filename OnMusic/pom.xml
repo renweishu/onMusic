@@ -75,19 +75,20 @@
 			<version>${spring.version}</version>
 		</dependency>
 		<!-- springframe end -->
-		<!-- springAOP依赖的aspectjweaver -->
+		
+		<!-- AOP 使用aspactj框架时 所依赖的两个包 -->
 		<dependency>
 			<groupId>aspectj</groupId>
 			<artifactId>aspectjweaver</artifactId>
 			<version>1.5.3</version>
 		</dependency>
-		<!-- 感觉以下两个包aop时可要可不要 待确定 -->
 		<dependency>
 			<groupId>aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
 			<version>1.5.3</version>
 		</dependency>
 
+		<!-- AOP代理时 需要CGLIB 2的库- 使用动态代理的话只需要JDK -->
 		<dependency>
 			<groupId>cglib</groupId>
 			<artifactId>cglib</artifactId>
