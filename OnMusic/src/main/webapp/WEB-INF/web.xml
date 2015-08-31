@@ -73,6 +73,7 @@
 	<!-- 设置servlet编码结束 -->
 
 	<!-- Spring配置文件开始 -->
+	<!-- DI Framework Listener -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath:com/avicit/resource/spring/spring-base.xml</param-value>
@@ -93,7 +94,9 @@
 		<servlet-name>spring</servlet-name>
 	</filter-mapping>
 
-
+    <!-- ============================================================== -->
+    <!--   springMVC上下文配置                                                                                                                                        -->
+    <!-- ============================================================== -->
 	<servlet>
 		<servlet-name>spring-dispatcher</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -108,6 +111,9 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
+    <!-- ============================================================== -->
+    <!--   Error Page Definitions                                       -->
+    <!-- ============================================================== -->
 	<error-page>
 		<error-code>500</error-code>
 		<location>/error.jsp?code=500</location>
@@ -133,9 +139,17 @@
 		<error-code>400</error-code>
 		<location>/error.jsp?code=400</location>
 	</error-page>
-
+    <!-- ============================================================== -->
+    <!--   Welcome pages                                                -->
+    <!-- ============================================================== -->
 	<welcome-file-list>
 		<welcome-file>/welcome.jsp</welcome-file>
 	</welcome-file-list>
 
+    <!-- ============================================================== -->
+    <!--   Session 超时设置                                                                                                                                               -->
+    <!-- ============================================================== -->
+    <session-config>
+        <session-timeout>60</session-timeout>
+    </session-config>
 </web-app>

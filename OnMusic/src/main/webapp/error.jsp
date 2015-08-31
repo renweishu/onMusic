@@ -25,7 +25,7 @@
 </head>
 <body>
 	<%
-		out.println("程序发生错误，错误代码：" +code+ "，错误信息:访问" + request.getRequestURI() + "发生错误!<br />" + error);
+		out.println("当前程序发生错误||" +code+ "，错误信息:访问" + request.getRequestURI() + "发生错误!<br />" + error);
 	%>
 </body>
 </html>
