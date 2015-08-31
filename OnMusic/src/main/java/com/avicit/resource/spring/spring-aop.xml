@@ -52,7 +52,7 @@
 	<!-- 如果ProxyFactoryBean的proxyTargetClass属性被设为false，那么一个基于JDK的动态代理将创建 -->
 	<!-- 一般情况下默认为false -->
 	<aop:config >
-		<aop:pointcut id="allControllerOperation" expression="execution(* *Execute*(..))" />
+		<aop:pointcut id="allControllerOperation" expression="bean(*Controller*)" />
 		<aop:advisor advice-ref="testInterceptor" pointcut-ref="allControllerOperation"
 			order="1" />
 		<aop:advisor advice-ref="transactionInterceptor"
