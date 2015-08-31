@@ -20,20 +20,22 @@
 	<!-- 如果在springmvc子上下文中配置了aop:aspectj-autoproxy 这儿可要可不要 -->
 	<aop:aspectj-autoproxy />
 
-	<!-- 声明一个切面 -->
+	<!-- aop的两种实现方式==================================================================== -->
+	<!-- 使用aspectj注解方式 实现一个aop -->
 	<bean id="aspect1"
 		class="com.avicit.framework.util.aop.aspect.NotVeryUsefulAspect" />
 
+	<!-- 使用拦截器的方式实现一个aop -->
+	<bean id="testInterceptor"
+		class="com.avicit.framework.util.aop.interceptors.TestInterceptor" />
+
+	<!-- ==================================================================== -->
 	<!--【数据源1】 开 启 Spring 的 事 务 处 理 标准配置 管理数据源1 -->
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-
-	<!-- aop拦截器的测试 -->
-	<bean id="testInterceptor"
-		class="com.avicit.framework.util.aop.interceptors.TestInterceptor" />
 
 	<!-- 定义一个事务通知，管理者为transactionManager -->
 	<tx:advice id="transactionInterceptor" transaction-manager="transactionManager">

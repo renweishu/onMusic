@@ -17,7 +17,7 @@ public class NotVeryUsefulAspect {
 	public void test(){
 		System.out.println("======================================================");
 		System.out.println("==                                                  ==");
-		System.out.println("==@Aspect-web测试                                                                                                             ==");
+		System.out.println("==使用@Aspect-web注解方式 实现一个aop                       ==");
 		System.out.println("==                                                  ==");
 		System.out.println("======================================================");
 

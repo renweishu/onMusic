@@ -30,7 +30,7 @@ public class TestInterceptor implements MethodInterceptor {
 	public Object invoke(MethodInvocation invocation) throws Throwable {
 		System.out.println("======================================================");
 		System.out.println("==                                                  ==");
-		System.out.println("==AOP-MethodInterceptor测试                                                                               ==");
+		System.out.println("==使用拦截器的方式实现一个aop                               ==");
 		System.out.println("==                                                  ==");
 		System.out.println("======================================================");
 
