@@ -1,0 +1,71 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- 親POMの設定 -->
+    <parent>
+        <groupId>jp.co.rms.dpro</groupId>
+        <artifactId>rms-parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+        <!-- groupId, versionをここで指定しない場合、 -->
+    <!-- parentのgroupId,versionと同じとみなされます -->
+    <artifactId>rms-resources</artifactId>
+    <name>${project.artifactId}</name>
+    <!-- 説明 -->
+    <description> 環境依存性を持つ設定ファイルを格納しておくためのプロジェクト </description>
+    <!-- バージョン指定 -->
+    <!-- 成果物の形 -->
+    <packaging>jar</packaging>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <overrideResourceName>main</overrideResourceName>
+            </properties>
+        </profile>
+        <profile>
+            <id>si</id>
+            <properties>
+                <overrideResourceName>si</overrideResourceName>
+            </properties>
+        </profile>
+        <profile>
+            <id>production</id>
+            <properties>
+                <overrideResourceName>production</overrideResourceName>
+            </properties>
+        </profile>
+    </profiles>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <resources>
+            <!-- profile指定した設定ファイルでmainを上書きする -->
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>src/${overrideResourceName}/resources</directory>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <!-- 同じファイル名のリソースがあったら上書き -->
+                    <overwrite>true</overwrite>
+                    <encoding>${encoding}</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>

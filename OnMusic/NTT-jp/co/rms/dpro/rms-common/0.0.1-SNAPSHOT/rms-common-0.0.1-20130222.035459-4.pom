@@ -1,0 +1,73 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <!-- 親POMの設定 -->
+    <parent>
+        <groupId>jp.co.rms.dpro</groupId>
+        <artifactId>rms-parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <!-- groupId, versionをここで指定しない場合、 -->
+    <!-- parentのgroupId,versionと同じとみなされます -->
+    <artifactId>rms-common</artifactId>
+    <name>${project.artifactId}</name>
+    <!-- 説明 -->
+    <description> トレーニングナビ共通開発プロジェクト </description>
+    <!-- バージョン指定 -->
+    <!-- 成果物の形 -->
+    <packaging>jar</packaging>
+
+    <distributionManagement>
+        <!-- 正式リリースバージョン つまり pomのversionタグが *-SNAPSHOT ではない -->
+        <!-- ものを格納するNEXUS上のhostedリポジトリです -->
+        <repository>
+            <id>releases</id>
+            <url>http://172.25.40.1:8081/nexus/content/repositories/releases</url>
+        </repository>
+        <!-- SNAPSHOTバージ ョン つまり pomのversionタグが *-SNAPSHOT である -->
+        <!-- ものを格納するNEXUS上のhostedリポジトリです -->
+        <snapshotRepository>
+            <id>snapshots</id>
+            <url>http://172.25.40.1:8081/nexus/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <build>
+        <!-- 成果物のファイル名 -->
+        <finalName>${project.artifactId}-${project.version}</finalName>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!-- ライブラリ設定 -->
+    <dependencies>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jp.terasoluna.fw</groupId>
+            <artifactId>terasoluna-dao</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jp.terasoluna.fw.lib</groupId>
+            <artifactId>teralib-util</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring</artifactId>
+        </dependency>
+    </dependencies>
+</project>

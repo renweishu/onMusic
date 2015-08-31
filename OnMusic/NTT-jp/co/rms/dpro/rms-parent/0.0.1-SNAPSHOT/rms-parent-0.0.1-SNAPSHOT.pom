@@ -1,0 +1,1003 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- グループID指定 -->
+    <groupId>jp.co.rms.dpro</groupId>
+    <!-- モジュールの名前 -->
+    <artifactId>rms-parent</artifactId>
+    <!-- バージョン指定 -->
+    <version>0.0.1-SNAPSHOT</version>
+    <name>${project.artifactId}</name>
+    <!-- 説明 -->
+    <description> トレーニングナビの親POMです。 </description>
+    <packaging>pom</packaging>
+
+    <properties>
+        <releaseTag>defaultReleaseTag</releaseTag>
+        <!-- 文字エンコーディングです -->
+        <encoding>UTF-8</encoding>
+        <!-- javaのバージョンです -->
+        <jdk.version>1.6</jdk.version>
+        <!-- springフレームワークのバージョンです -->
+        <spring.version>2.5.6.SEC01</spring.version>
+        <!-- ソースやレポートのエンコーディングを指定します -->
+        <project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
+        <project.siteDirectory>env/build/site</project.siteDirectory>
+    </properties>
+
+    <distributionManagement>
+        <!-- 正式リリースバージョン つまり pomのversionタグが *-SNAPSHOT ではない -->
+        <!-- ものを格納するNEXUS上のhostedリポジトリです -->
+        <repository>
+            <id>releases</id>
+            <url>http://172.25.40.1:8081/nexus/content/repositories/releases</url>
+        </repository>
+        <!-- SNAPSHOTバージョン つまり pomのversionタグが *-SNAPSHOT である -->
+        <!-- ものを格納するNEXUS上のhostedリポジトリです -->
+        <snapshotRepository>
+            <id>snapshots</id>
+            <url>http://172.25.40.1:8081/nexus/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <!-- javaコンパイルをするplugin -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>2.3.2</version>
+                </plugin>
+                <!-- javadocを生成するプラグイン -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>2.7</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>2.4.1</version>
+                </plugin>
+                <!-- ユニットテストコードを実行してレポート化してくれるplugin -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.8.1</version>
+                </plugin>
+                <!-- 成果物をmavenリポジトリ(NEXUS)やAPサーバにデプロイするplugin -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>2.6</version>
+                </plugin>
+                <!-- versionタグを書き換えてくれるplugin -->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>versions-maven-plugin</artifactId>
+                    <version>1.2</version>
+                </plugin>
+                <!-- versionタグを書き換えたりsvnにタグを切ってくれるplugin. ただし使わない可能性大 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>2.2</version>
+                </plugin>
+                <!-- src/main/resources等のリソースファイルを置換してくれる -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>2.5</version>
+                </plugin>
+                <!-- warファイル化するplugin -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>2.1.1</version>
+                </plugin>
+                <!-- jarファイル化するplugin -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>2.3.1</version>
+                </plugin>
+                <!-- 特殊なソースツリー構造をとりたい場合に使うplugin -->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>1.5</version>
+                </plugin>
+                <!-- pom上で指定したjdbc-urlに向かって指定したsql文を実行するplugin -->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>sql-maven-plugin</artifactId>
+                    <version>1.5</version>
+                </plugin>
+                <!-- Fatjarを作るためのplugin -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-shade-plugin</artifactId>
+                    <version>1.4</version>
+                </plugin>
+                <!-- tarやzipにするためのplugin -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>2.2-beta-2</version>
+                </plugin>
+                <!-- mavenからantタスクを呼び出して実行できるplugin -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <version>1.7</version>
+                </plugin>
+                <!-- Javaを実行できるplugin -->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <version>1.2.1</version>
+                </plugin>
+                <!--site機能を実現できるplugin -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>2.3</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <!-- build/pluginsでは、mvnコマンドの実行時にそれぞれのpluginを制御する設定を書く -->
+        <!-- pluginのversionは上で指定済みなのでここではあえて書かない。(antrunするものを除く） -->
+        <plugins>
+            <!-- javadoc.jarの生成 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <!-- JDKのバージョン指定 -->
+                    <source>${jdk.version}</source>
+                    <!-- エンコーディング設定 -->
+                    <encoding>${encoding}</encoding>
+                    <!-- HTMLファイルのエンコーディング設定 -->
+                    <docencoding>${encoding}</docencoding>
+                    <!-- HTMLファイルのデコード設定 -->
+                    <charset>${encoding}</charset>
+                    <!-- すべてのクラスメソッドを対象とする -->
+                    <show>private</show>
+                    <!-- 外部のjavadocにリンクしない -->
+                    <detectJavaApiLink>false</detectJavaApiLink>
+
+                </configuration>
+                <executions>
+                    <!-- 配布用のjavadocのjarを生成する -->
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- コンパイルの設定 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <!-- JDKのバージョン指定 -->
+                    <source>${jdk.version}</source>
+                    <!-- JDKのバージョン指定 -->
+                    <target>${jdk.version}</target>
+                    <!-- エンコーディング設定 -->
+                    <encoding>${encoding}</encoding>
+                </configuration>
+            </plugin>
+            <!-- Eclipse設定ファイルの設定 -->
+            <plugin>
+                <artifactId>maven-eclipse-plugin</artifactId>
+                <version>2.8</version>
+                <configuration>
+                    <!-- sourcejarをダウンロード許可 -->
+                    <downloadSources>true</downloadSources>
+                    <!-- javadocjarをダウンロード許可 -->
+                    <downloadJavadocs>true</downloadJavadocs>
+                    <!-- configファイルを設定する -->
+                    <additionalConfig>
+                        <file>
+                            <name>.settings/org.eclipse.core.resources.prefs</name>
+                            <content>
+<![CDATA[
+eclipse.preferences.version=1
+encoding/<project>=${encoding}
+]]>
+                            </content>
+                        </file>
+                    </additionalConfig>
+                </configuration>
+            </plugin>
+            <!-- sourcejarを作る設定 -->
+            <plugin>
+                <artifactId>maven-source-plugin</artifactId>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.codehaus.plexus</groupId>
+                        <artifactId>plexus-archiver</artifactId>
+                        <version>2.0.1</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <id>source-jar</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- war生成の設定 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                        </manifest>
+                        <!-- Manifest設定 -->
+                        <manifestEntries>
+                            <Extension-Name>${project.name}</Extension-Name>
+                            <Built-By>DPRO PROJECT</Built-By>
+                            <Specification-Title>${project.name}</Specification-Title>
+                            <Specification-Version>${project.version}</Specification-Version>
+                            <Specification-Vendor>DPRO PROJECT</Specification-Vendor>
+                            <Implementation-Title>${project.name}</Implementation-Title>
+                            <Implementation-Version>${project.version}</Implementation-Version>
+                            <Implementation-Vendor-Id>jp.co.rms.dpro</Implementation-Vendor-Id>
+                            <Implementation-Vendor>DPRO PROJECT</Implementation-Vendor>
+                            <Build-Timestamp>${maven.build.timestamp}</Build-Timestamp>
+                            <ReleaseTag>${releaseTag}</ReleaseTag>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+            <!-- jar生成の設定 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                        </manifest>
+                        <!-- Manifest設定 -->
+                        <manifestEntries>
+                            <Extension-Name>${project.name}</Extension-Name>
+                            <Built-By>DPRO PROJECT</Built-By>
+                            <Specification-Title>${project.name}</Specification-Title>
+                            <Specification-Version>${project.version}</Specification-Version>
+                            <Specification-Vendor>DPRO PROJECT</Specification-Vendor>
+                            <Implementation-Title>${project.name}</Implementation-Title>
+                            <Implementation-Version>${project.version}</Implementation-Version>
+                            <Implementation-Vendor-Id>jp.co.rms.dpro</Implementation-Vendor-Id>
+                            <Implementation-Vendor>DPRO PROJECT</Implementation-Vendor>
+                            <Build-Timestamp>${maven.build.timestamp}</Build-Timestamp>
+                            <ReleaseTag>${releaseTag}</ReleaseTag>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+            <!-- zip,tar生成の設定 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                        </manifest>
+                        <!-- Manifest設定 -->
+                        <manifestEntries>
+                            <Extension-Name>${project.name}</Extension-Name>
+                            <Built-By>DPRO PROJECT</Built-By>
+                            <Specification-Title>${project.name}</Specification-Title>
+                            <Specification-Version>${project.version}</Specification-Version>
+                            <Specification-Vendor>DPRO PROJECT</Specification-Vendor>
+                            <Implementation-Title>${project.name}</Implementation-Title>
+                            <Implementation-Version>${project.version}</Implementation-Version>
+                            <Implementation-Vendor-Id>jp.co.rms.dpro</Implementation-Vendor-Id>
+                            <Implementation-Vendor>DPRO PROJECT</Implementation-Vendor>
+                            <Build-Timestamp>${maven.build.timestamp}</Build-Timestamp>
+                            <ReleaseTag>${releaseTag}</ReleaseTag>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!-- maven site レポートを作る時の設定群 -->
+    <reporting>
+        <plugins>
+            <!-- site機能の設定 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <locales>ja</locales>
+                    <!-- エンコード設定 -->
+                    <inputEncoding>${encoding}</inputEncoding>
+                    <outputEncoding>${encoding}</outputEncoding>
+                    <!-- site生成の元となる設定ファイルの置き場所 -->
+                    <siteDirectory>${project.siteDirectory}</siteDirectory>
+                </configuration>
+            </plugin>
+            <!-- javadoc生成の設定 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.7</version>
+                <configuration>
+                    <!-- エンコード設定 -->
+                    <encoding>${encoding}</encoding>
+                    <!-- デコード設定 -->
+                    <docencoding>${encoding}</docencoding>
+                </configuration>
+            </plugin>
+            <!-- JUnit実行結果のhtml化 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+                <version>2.4.3</version>
+            </plugin>
+            <!-- ユニットテストのカバレッジ測定結果のhtml化 -->
+            <plugin>
+                <groupId>org.sonatype.maven.plugin</groupId>
+                <artifactId>emma-maven-plugin</artifactId>
+                <version>1.2</version>
+            </plugin>
+            <!-- checkstyleの実行 ルールファイルの位置は各モジュール側pomで指定 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <!-- 実行結果の出力 -->
+                    <enableRulesSummary>true</enableRulesSummary>
+                    <!-- カスタムルールの設定 -->
+                    <configLocation>${project.checkstyle}</configLocation>
+                    <!-- コンソール出力 -->
+                    <consoleOutput>true</consoleOutput>
+                </configuration>
+            </plugin>
+            <!-- レポートとソースコード間のクロスリファレンス用html作成 -->
+            <plugin>
+                <artifactId>maven-jxr-plugin</artifactId>
+                <version>2.1</version>
+                <configuration>
+                    <aggregate>false</aggregate>
+                    <!-- エンコード設定 -->
+                    <inputEncoding>${encoding}</inputEncoding>
+                    <outputEncoding>${encoding}</outputEncoding>
+                </configuration>
+            </plugin>
+            <!-- filndbugsの実行 ルールファイルの位置は各モジュール側pomで指定 -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>findbugs-maven-plugin</artifactId>
+                <version>2.0</version>
+                <configuration>
+                    <!-- エンコード設定 -->
+                    <inputEncoding>${encoding}</inputEncoding>
+                    <outputEncoding>${encoding}</outputEncoding>
+                    <!-- カスタムルールの設定 -->
+                    <includeFilterFile>${project.findbugs}</includeFilterFile>
+                    <!-- 実行結果のxml出力 -->
+                    <xmlOutput>true</xmlOutput>
+                </configuration>
+            </plugin>
+            <!-- プロジェクト自体の各種レポート出力 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>2.1.2</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>index</report>
+                            <report>summary</report>
+                            <report>cim</report>
+                            <report>scm</report>
+                            <!-- <report>dependencies</report> -->
+                            <report>dependency-convergence</report>
+                            <report>dependency-management</report>
+                            <report>plugin-management</report>
+                            <report>plugins</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+        </plugins>
+    </reporting>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- terasolunaライブラリ -->
+            <dependency>
+                <groupId>jp.terasoluna.fw.web</groupId>
+                <artifactId>terasoluna-thin</artifactId>
+                <version>2.0.4.0</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>struts</groupId>
+                        <artifactId>struts</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <!-- terasolunaライブラリ -->
+            <dependency>
+                <groupId>jp.terasoluna.fw.batch</groupId>
+                <artifactId>terasoluna-batch</artifactId>
+                <version>3.1.2</version>
+            </dependency>
+            <dependency>
+                <groupId>jp.terasoluna.fw.batch</groupId>
+                <artifactId>terasoluna-batch-update</artifactId>
+                <version>1.1.1</version>
+            </dependency>
+            <!-- terasolunaライブラリ -->
+            <dependency>
+                <groupId>jp.terasoluna.fw</groupId>
+                <artifactId>terasoluna-commons</artifactId>
+                <version>2.0.4.0</version>
+            </dependency>
+            <dependency>
+                <groupId>jp.terasoluna.fw</groupId>
+                <artifactId>terasoluna-dao</artifactId>
+                <version>2.0.4.0</version>
+            </dependency>
+            <dependency>
+                <groupId>jp.terasoluna.fw</groupId>
+                <artifactId>terasoluna-ibatis</artifactId>
+                <version>2.0.4.0</version>
+            </dependency>
+            <dependency>
+                <groupId>jp.terasoluna.fw</groupId>
+                <artifactId>terasoluna-validator</artifactId>
+                <version>2.0.4.0</version>
+            </dependency>
+            <dependency>
+                <groupId>jp.terasoluna.fw</groupId>
+                <artifactId>terasoluna-filedao</artifactId>
+                <version>3.1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>jp.terasoluna.fw.lib</groupId>
+                <artifactId>terasoluna-sysdate</artifactId>
+                <version>1.0.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>jp.terasoluna.fw.lib</groupId>
+                <artifactId>teralib-filter</artifactId>
+                <version>1.0.1</version>
+            </dependency>
+            <dependency>
+                <groupId>jp.terasoluna.fw</groupId>
+                <artifactId>terasoluna-logger</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>jp.terasoluna.fw.lib</groupId>
+                <artifactId>teralib-stringutil</artifactId>
+                <version>1.0.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>jp.terasoluna.fw.lib</groupId>
+                <artifactId>terasoluna-collector</artifactId>
+                <version>1.0.2</version>
+            </dependency>
+            <dependency>
+                <groupId>jp.terasoluna.fw.lib</groupId>
+                <artifactId>terasoluna-crypt</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>jp.terasoluna.fw.lib</groupId>
+                <artifactId>teralib-ziputil</artifactId>
+                <version>1.0.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>jp.terasoluna.fw.lib</groupId>
+                <artifactId>teralib-log</artifactId>
+                <version>1.0.1</version>
+            </dependency>
+            <dependency>
+                <groupId>jp.terasoluna.fw.lib</groupId>
+                <artifactId>terasoluna-sqllogger</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>struts</groupId>
+                <artifactId>struts</artifactId>
+                <version>1.2.9</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>xalan</groupId>
+                        <artifactId>xalan</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>cglib</groupId>
+                <artifactId>cglib-nodep</artifactId>
+                <version>2.1_3</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>1.5</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-compress</artifactId>
+                <version>1.4</version>
+            </dependency>
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcprov-jdk16</artifactId>
+                <version>1.46</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-net</artifactId>
+                <version>2.2</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.annotation</groupId>
+                <artifactId>jsr250-api</artifactId>
+                <version>1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-lang</groupId>
+                <artifactId>commons-lang</artifactId>
+                <version>2.3</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>2.0.1</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-collections</groupId>
+                <artifactId>commons-collections</artifactId>
+                <version>3.2</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>1.8.3</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+                <version>1.1.1</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-fileupload</groupId>
+                <artifactId>commons-fileupload</artifactId>
+                <version>1.2</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-jxpath</groupId>
+                <artifactId>commons-jxpath</artifactId>
+                <version>1.3</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-digester</groupId>
+                <artifactId>commons-digester</artifactId>
+                <version>1.8</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-validator</groupId>
+                <artifactId>commons-validator</artifactId>
+                <version>1.3.1</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-dbcp</groupId>
+                <artifactId>commons-dbcp</artifactId>
+                <version>1.2.2.patch_DBCP264_DBCP372</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-pool</groupId>
+                <artifactId>commons-pool</artifactId>
+                <version>1.6</version>
+            </dependency>
+            <dependency>
+                <groupId>antlr</groupId>
+                <artifactId>antlr</artifactId>
+                <version>2.7.6</version>
+            </dependency>
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjweaver</artifactId>
+                <version>1.6.12</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-beans</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-jms</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-tx</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-jdbc</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-web</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-webmvc-struts</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-aop</artifactId>
+                <version>2.5.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springmodules</groupId>
+                <artifactId>spring-modules-validation</artifactId>
+                <version>0.8a</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.ibatis</groupId>
+                <artifactId>ibatis-sqlmap</artifactId>
+                <version>2.3.4.726</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis</artifactId>
+                <version>2.3.5</version>
+            </dependency>
+            <dependency>
+                <groupId>aopalliance</groupId>
+                <artifactId>aopalliance</artifactId>
+                <version>1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <version>1.2.16</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>javax.mail</groupId>
+                        <artifactId>mail</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>javax.jms</groupId>
+                        <artifactId>jms</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>activation</artifactId>
+                        <groupId>javax.activation</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>jmxri</artifactId>
+                        <groupId>com.sun.jmx</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>jmxtools</artifactId>
+                        <groupId>com.sun.jdmk</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.json</groupId>
+                <artifactId>json</artifactId>
+                <version>20080701</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hornetq</groupId>
+                <artifactId>hornetq-core-client</artifactId>
+                <version>2.2.10.Final</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hornetq</groupId>
+                <artifactId>hornetq-jms-client</artifactId>
+                <version>2.2.10.Final</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hornetq</groupId>
+                <artifactId>hornetq-logging</artifactId>
+                <version>2.2.10.Final</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hornetq</groupId>
+                <artifactId>hornetq-transports</artifactId>
+                <version>2.0.0.GA</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>servlet-api</artifactId>
+                <version>2.5</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet.jsp</groupId>
+                <artifactId>jsp-api</artifactId>
+                <version>2.1</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.axiom</groupId>
+                <artifactId>axiom-api</artifactId>
+                <version>1.2.12</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.axiom</groupId>
+                <artifactId>axiom-impl</artifactId>
+                <version>1.2.12</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.axis2</groupId>
+                <artifactId>axis2-adb</artifactId>
+                <version>1.6.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.axis2</groupId>
+                <artifactId>axis2-kernel</artifactId>
+                <version>1.6.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.axis2.transport.http</groupId>
+                <artifactId>axis2-transport-http</artifactId>
+                <version>1.6.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.axis2.transport.local</groupId>
+                <artifactId>axis2-transport-local</artifactId>
+                <version>1.6.1</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-httpclient</groupId>
+                <artifactId>commons-httpclient</artifactId>
+                <version>3.1</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.mail</groupId>
+                <artifactId>mail</artifactId>
+                <version>1.4.4</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.neethi</groupId>
+                <artifactId>neethi</artifactId>
+                <version>3.0.1</version>
+            </dependency>
+            <dependency>
+                <groupId>wsdl4j</groupId>
+                <artifactId>wsdl4j</artifactId>
+                <version>1.6.2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.ws.commons.schema</groupId>
+                <artifactId>XmlSchema</artifactId>
+                <version>1.4.7</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.activation</groupId>
+                <artifactId>activation</artifactId>
+                <version>1.1</version>
+            </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.4</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>junit-addons</groupId>
+                <artifactId>junit-addons</artifactId>
+                <version>1.4</version>
+                <scope>test</scope>
+                <exclusions>
+                    <exclusion>
+                        <groupId>xerces</groupId>
+                        <artifactId>xercesImpl</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>xerces</groupId>
+                        <artifactId>xmlParserAPIs</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>jp.co.nttdata.terasoluna.ractes</groupId>
+                <artifactId>ractes-lib</artifactId>
+                <version>2.3.0-fit2</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>jp.terasoluna.fw.lib</groupId>
+                <artifactId>terasoluna-unit</artifactId>
+                <version>2.2.0</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>jp.terasoluna.utlib</groupId>
+                <artifactId>terasoluna-utlib</artifactId>
+                <version>1.3.0</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.seleniumhq.selenium</groupId>
+                <artifactId>selenium-java</artifactId>
+                <version>2.13.0</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-all</artifactId>
+                <version>1.9.0</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-exec</artifactId>
+                <version>1.1</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>jp.co.dgic</groupId>
+                <artifactId>djunit</artifactId>
+                <version>0.8.5</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.geronimo.specs</groupId>
+                <artifactId>geronimo-jpa_3.0_spec</artifactId>
+                <version>1.0</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>10.0.1</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>4.1.2</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpcore</artifactId>
+                <version>4.1.2</version>
+            </dependency>
+            <dependency>
+                <groupId>javassist</groupId>
+                <artifactId>javassist</artifactId>
+                <version>3.11.0.GA</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>net.java.dev.jna</groupId>
+                <artifactId>jna</artifactId>
+                <version>3.3.0</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.sun.jna.platform</groupId>
+                <artifactId>jna-platform</artifactId>
+                <version>3.4.0</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.geronimo.specs</groupId>
+                <artifactId>geronimo-jta_1.1_spec</artifactId>
+                <version>1.1.1</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>ognl</groupId>
+                <artifactId>ognl</artifactId>
+                <version>3.0.2</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi</artifactId>
+                <version>3.8-20120326</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>3.8-20120326</version>
+            </dependency>
+            <dependency>
+                <groupId>org.seasar.extension</groupId>
+                <artifactId>s2-extension</artifactId>
+                <version>2.4.42</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.seasar.framework</groupId>
+                <artifactId>s2-framework</artifactId>
+                <version>2.4.34</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.seasar</groupId>
+                <artifactId>s2-tiger</artifactId>
+                <version>2.4.34</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>ch.ethz.ganymed</groupId>
+                <artifactId>ganymed-ssh2</artifactId>
+                <version>build210</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>jp.terasoluna.fw.lib</groupId>
+                <artifactId>terasoluna-web-cr</artifactId>
+                <version>1.1.0</version>
+                <optional>true</optional>
+            </dependency>
+            <dependency>
+                <groupId>jp.terasoluna.fw.lib</groupId>
+                <artifactId>terasoluna-crypt</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>jp.terasoluna.fw.lib</groupId>
+                <artifactId>teralib-exception</artifactId>
+                <version>1.0.1</version>
+            </dependency>
+            <dependency>
+                <groupId>jp.terasoluna.fw.lib</groupId>
+                <artifactId>teralib-util</artifactId>
+                <version>1.0.1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>oro</groupId>
+                <artifactId>oro</artifactId>
+                <version>2.0.8</version>
+            </dependency>
+            <dependency>
+                <groupId>jp.terasoluna.fw.lib</groupId>
+                <artifactId>terasoluna-taglibex</artifactId>
+                <version>1.1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.oracle</groupId>
+                <artifactId>ojdbc14</artifactId>
+                <version>10.2.0.1.0</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>

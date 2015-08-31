@@ -1,0 +1,617 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>jp.terasoluna.fw.lib</groupId>
+    <artifactId>terasoluna-unit</artifactId>
+    <packaging>jar</packaging>
+    <version>2.2.0</version>
+    <name>terasoluna-unit</name>
+    <url>http://terasoluna.jp/</url>
+
+    <properties>
+        <encoding>Windows-31J</encoding>
+        <project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
+        <maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss</maven.build.timestamp.format>
+        <jdk.version>1.5</jdk.version>
+        <terasoluna.fw.version>2.0.3.1</terasoluna.fw.version>
+        <terasoluna.fw.web.version>2.0.3.1</terasoluna.fw.web.version>
+        <terasoluan.filedao.version>2.0.3.1</terasoluan.filedao.version>
+        <junit.version>4.4</junit.version>
+        <junit.addons.version>1.4</junit.addons.version>
+        <!-- spring -->
+        <spring.version>2.5.6.SEC01</spring.version>
+        <!-- ibatis -->
+        <ibatis.version>2.3.4.726</ibatis.version>
+        <!-- struts -->
+        <struts.version>1.2.9</struts.version>
+        <!-- cglib -->
+        <cglib.nodep.version>2.1_3</cglib.nodep.version>
+        <!-- commons -->
+        <commons.beanutils.version>1.7.0</commons.beanutils.version>
+        <commons.dbcp.version>1.2.2</commons.dbcp.version>
+        <commons.digester.version>1.8</commons.digester.version>
+        <commons.fileupload.version>1.2</commons.fileupload.version>
+        <commons.jxpath.version>1.3</commons.jxpath.version>
+        <commons.lang.version>2.3</commons.lang.version>
+        <commons.logging.version>1.1.1</commons.logging.version>
+        <commons.pool.version>1.3</commons.pool.version>
+        <commons.validator.version>1.3.1</commons.validator.version>
+        <!-- jakarta -->
+        <jakarta.oro.version>2.0.8</jakarta.oro.version>
+        <!-- antlr -->
+        <antlr.version>2.7.6</antlr.version>
+        <!-- servlet -->
+        <servlet.api.version>2.3</servlet.api.version>
+        <jsp.api.version>2.0</jsp.api.version>
+        <!-- utlib -->
+        <terasoluna.utlib.version>1.3.0</terasoluna.utlib.version>
+        <terasoluna.utlib.spring.version>1.1.0</terasoluna.utlib.spring.version>
+        <!-- mockrunner -->
+        <mockrunner.version>0.3.1</mockrunner.version>
+        <!-- easymock -->
+        <easymock.version>2.3</easymock.version>
+        <!-- servletunit -->
+        <servletunit.version>2.1.2</servletunit.version>
+        <!-- djunit -->
+        <djunit.version>0.8.5</djunit.version>
+        <jcoverage.version>djunit-1.0.5</jcoverage.version>
+        <oro.version>2.0.7</oro.version>
+        <asm.version>3.1</asm.version>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>terasoluna-snapshots</id>
+            <name>Terasoluna Maven Snapshot Repository</name>
+            <url>http://terasoluna2-lib.rd.nttdata.co.jp:10080/maven/snapshots</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+
+        <repository>
+            <id>terasoluna-releases</id>
+            <name>Terasoluna Maven Release Repository</name>
+            <url>http://terasoluna2-lib.rd.nttdata.co.jp:10080/maven/releases</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <distributionManagement>
+        <repository>
+            <uniqueVersion>false</uniqueVersion>
+            <id>terasoluna-releases</id>
+            <name>Terasoluna Maven Repository</name>
+            <url>dav:http://terasoluna2-lib.rd.nttdata.co.jp:10080/maven/releases</url>
+        </repository>
+        <snapshotRepository>
+            <uniqueVersion>true</uniqueVersion>
+            <id>terasoluna-snapshots</id>
+            <name>Terasoluna Maven Snapshot Repository</name>
+            <url>dav:http://terasoluna2-lib.rd.nttdata.co.jp:10080/maven/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <build>
+        <extensions>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-webdav</artifactId>
+            </extension>
+        </extensions>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${jdk.version}</source>
+                    <target>${jdk.version}</target>
+                    <encoding>${encoding}</encoding>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.7</version>
+                <configuration>
+                    <author>true</author>
+                    <source>${jdk.version}</source>
+                    <!-- - showPackage がデフォルトで true になっているので、 - showPackage 
+                        以外 (showPrivate など) を true にするときは - showPackage を明示的に false にしなければならない。 - 
+                        そうしないと javadoc コマンドに渡される引数に - "javadoc ... -package -private ..." という具合にパッケージングの指定が 
+                        - 二つ以上含まれてしまうことになり、エラーとなってしまう。 -->
+                    <showPackage>false</showPackage>
+                    <showPrivate>true</showPrivate>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <charset>${project.build.sourceEncoding}</charset>
+                    <docencoding>${project.build.sourceEncoding}</docencoding>
+                    <archive>
+                        <addMavenDescriptor>false</addMavenDescriptor>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                        </manifest>
+                        <manifestEntries>
+                            <Build-Timestamp>${maven.build.timestamp}</Build-Timestamp>
+                            <Extension-Name>${project.name}</Extension-Name>
+                            <Built-By>TERASOLUNA</Built-By>
+                            <Specification-Title>${project.name}</Specification-Title>
+                            <Specification-Version>${project.version}</Specification-Version>
+                            <Specification-Vendor>NTT DATA Corporation.</Specification-Vendor>
+                            <Implementation-Title>${project.name}</Implementation-Title>
+                            <Implementation-Version>${project.version}</Implementation-Version>
+                            <Implementation-Vendor-Id>${project.groupId}</Implementation-Vendor-Id>
+                            <Implementation-Vendor>NTT DATA Corporation.</Implementation-Vendor>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.3.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <archive>
+                        <addMavenDescriptor>false</addMavenDescriptor>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                        </manifest>
+                        <manifestEntries>
+                            <Build-Timestamp>${maven.build.timestamp}</Build-Timestamp>
+                            <Extension-Name>${project.name}</Extension-Name>
+                            <Built-By>TERASOLUNA</Built-By>
+                            <Specification-Title>${project.name}</Specification-Title>
+                            <Specification-Version>${project.version}</Specification-Version>
+                            <Specification-Vendor>NTT DATA Corporation.</Specification-Vendor>
+                            <Implementation-Title>${project.name}</Implementation-Title>
+                            <Implementation-Version>${project.version}</Implementation-Version>
+                            <Implementation-Vendor-Id>${project.groupId}</Implementation-Vendor-Id>
+                            <Implementation-Vendor>NTT DATA Corporation.</Implementation-Vendor>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.1.2</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <archive>
+                        <addMavenDescriptor>false</addMavenDescriptor>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                        </manifest>
+                        <manifestEntries>
+                            <Build-Timestamp>${maven.build.timestamp}</Build-Timestamp>
+                            <Extension-Name>${project.name}</Extension-Name>
+                            <Built-By>TERASOLUNA</Built-By>
+                            <Specification-Title>${project.name}</Specification-Title>
+                            <Specification-Version>${project.version}</Specification-Version>
+                            <Specification-Vendor>NTT DATA Corporation.</Specification-Vendor>
+                            <Implementation-Title>${project.name}</Implementation-Title>
+                            <Implementation-Version>${project.version}</Implementation-Version>
+                            <Implementation-Vendor-Id>${project.groupId}</Implementation-Vendor-Id>
+                            <Implementation-Vendor>NTT DATA Corporation.</Implementation-Vendor>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.8</version>
+                <configuration>
+                    <author>true</author>
+                    <source>${jdk.version}</source>
+                    <showPackage>false</showPackage>
+                    <showPrivate>true</showPrivate>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <charset>${project.build.sourceEncoding}</charset>
+                    <docencoding>${project.build.sourceEncoding}</docencoding>
+                    <archive>
+                        <addMavenDescriptor>false</addMavenDescriptor>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                        </manifest>
+                        <manifestEntries>
+                            <Build-Timestamp>${maven.build.timestamp}</Build-Timestamp>
+                            <Extension-Name>${project.name}</Extension-Name>
+                            <Built-By>TERASOLUNA</Built-By>
+                            <Specification-Title>${project.name}</Specification-Title>
+                            <Specification-Version>${project.version}</Specification-Version>
+                            <Specification-Vendor>NTT DATA Corporation.</Specification-Vendor>
+                            <Implementation-Title>${project.name}</Implementation-Title>
+                            <Implementation-Version>${project.version}</Implementation-Version>
+                            <Implementation-Vendor-Id>${project.groupId}</Implementation-Vendor-Id>
+                            <Implementation-Vendor>NTT DATA Corporation.</Implementation-Vendor>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+
+            <!-- test実行にDJUnitを使用 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <argLine><![CDATA[-Djava.system.class.loader=jp.co.dgic.testing.common.DJUnitClassLoader -Djp.co.dgic.eclipse.virtualmock.usevirtualmock=true -Djp.co.dgic.eclipse.coverage.usecoverage=true -Djp.co.dgic.eclipse.project.source.dir="${project.build.sourceDirectory}" -Djp.co.dgic.eclipse.virtualmock.ignore.library=false -Dcom.jcoverage.rawcoverage.dir="${basedir}/target"]]></argLine>
+                    <forkMode>always</forkMode>
+                    <useSystemClassLoader>true</useSystemClassLoader>
+                    <includes>
+                        <include>**/*Test.java</include>
+                    </includes>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <!-- JUnitのレポートを出力 -->
+                    <execution>
+                        <id>djunit-coverage-report</id>
+                        <phase>test</phase>
+                        <configuration>
+                            <target unless="maven.test.skip">
+                                <taskdef
+                                    classpath="${basedir}/lib/djunit/djunit-${djunit.version}.jar"
+                                    resource="djunittasks.properties" />
+                                <djunit-coverage-report
+                                    serFile="${basedir}/target/jcoverage.ser"
+                                    srcdir="${basedir}/src/main/java"
+                                    destdir="${basedir}/target/report/coverage"
+                                    charset="${project.build.sourceEncoding}"
+                                    srcfileencoding="${project.build.sourceEncoding}">
+                                    <classpath
+                                        location="${basedir}/lib/djunit/junit-${djunit.version}.jar" />
+                                    <classpath
+                                        location="${basedir}/lib/djunit/jcoverage-${jcoverage.version}.jar" />
+                                    <classpath
+                                        location="${basedir}/lib/djunit/oro-${oro.version}.jar" />
+                                    <classpath
+                                        location="${basedir}/lib/djunit/asm-${asm.version}.jar" />
+                                </djunit-coverage-report>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>com.mycila.maven-license-plugin</groupId>
+                <artifactId>maven-license-plugin</artifactId>
+                <configuration>
+                    <header>src/etc/header.txt</header>
+                    <includes>
+                        <include>src/**/*.java</include>
+                    </includes>
+                    <encoding>${encoding}</encoding>
+                    <headerDefinitions>
+                        <headerDefinition>src/etc/header-definition.xml</headerDefinition>
+                    </headerDefinitions>
+                </configuration>
+            </plugin>
+        </plugins>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>maven-eclipse-plugin</artifactId>
+                    <configuration>
+                        <useProjectReferences>false</useProjectReferences>
+                        <wtpversion>1.5</wtpversion>
+                        <downloadSources>true</downloadSources>
+                        <classpathContainers>
+                            <buildcommand>org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre${jdk.version}</buildcommand>
+                        </classpathContainers>
+                        <additionalConfig>
+                            <file>
+                                <name>.settings/org.eclipse.jdt.ui.prefs</name>
+                                <content>
+        <![CDATA[
+editor_save_participant_org.eclipse.jdt.ui.postsavelistener.cleanup=true
+sp_cleanup.format_source_code=true
+sp_cleanup.organize_imports=true
+        ]]>
+                                </content>
+                            </file>
+                            <file>
+                                <name>.settings/org.eclipse.jdt.core.prefs</name>
+                                <content>
+        <![CDATA[
+encoding//src/test/java=${encoding}
+org.eclipse.jdt.core.compiler.codegen.targetPlatform=${jdk.version}
+eclipse.preferences.version=1
+encoding//src/test/resources=${encoding}
+org.eclipse.jdt.core.compiler.source=${jdk.version}
+encoding//src/main/java=${encoding}
+encoding//src/main/resources=UTF-8
+org.eclipse.jdt.core.compiler.compliance=${jdk.version}
+        ]]>
+                                </content>
+                            </file>
+                            <file>
+                                <name>.settings/org.eclipse.core.resources.prefs</name>
+                                <content>
+        <![CDATA[
+eclipse.preferences.version=1
+encoding/<project>=${encoding}
+        ]]>
+                                </content>
+                            </file>
+                        </additionalConfig>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <dependencies>
+
+
+        <dependency>
+            <groupId>jp.terasoluna.fw.web</groupId>
+            <artifactId>terasoluna-thin</artifactId>
+            <version>${terasoluna.fw.web.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>struts</artifactId>
+                    <groupId>struts</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-webmvc-struts</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>commons-fileupload</artifactId>
+                    <groupId>commons-fileupload</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>commons-validator</artifactId>
+                    <groupId>commons-validator</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>oro</artifactId>
+                    <groupId>oro</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>antlr</artifactId>
+                    <groupId>antlr</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>terasoluna-ibatis</artifactId>
+                    <groupId>jp.terasoluna.fw</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>commons-beanutils</artifactId>
+                    <groupId>commons-beanutils</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>commons-jxpath</artifactId>
+                    <groupId>commons-jxpath</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>commons-logging</artifactId>
+                    <groupId>commons-logging</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>commons-lang</artifactId>
+                    <groupId>commons-lang</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>cglib-nodep</artifactId>
+                    <groupId>cglib</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>jp.terasoluna.fw</groupId>
+            <artifactId>terasoluna-ibatis</artifactId>
+            <version>${terasoluna.fw.web.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring</artifactId>
+            <version>${spring.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- Springで必要なのは以下のみ -->
+        <!-- <dependency> -->
+        <!-- <groupId>org.springframework</groupId> -->
+        <!-- <artifactId>spring-core</artifactId> -->
+        <!-- <version>${spring.version}</version> -->
+        <!-- </dependency> -->
+<!---->
+        <!-- <dependency> -->
+        <!-- <groupId>org.springframework</groupId> -->
+        <!-- <artifactId>spring-beans</artifactId> -->
+        <!-- <version>${spring.version}</version> -->
+        <!-- </dependency> -->
+<!---->
+        <!-- <dependency> -->
+        <!-- <groupId>org.springframework</groupId> -->
+        <!-- <artifactId>spring-context</artifactId> -->
+        <!-- <version>${spring.version}</version> -->
+        <!-- </dependency> -->
+<!---->
+        <!-- <dependency> -->
+        <!-- <groupId>org.springframework</groupId> -->
+        <!-- <artifactId>spring-jdbc</artifactId> -->
+        <!-- <version>${spring.version}</version> -->
+        <!-- </dependency> -->
+
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>${commons.lang.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>${commons.logging.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.15</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.mail</groupId>
+                    <artifactId>mail</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>javax.jms</groupId>
+                    <artifactId>jms</artifactId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>activation</artifactId>
+                    <groupId>javax.activation</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>jmxri</artifactId>
+                    <groupId>com.sun.jmx</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>jmxtools</artifactId>
+                    <groupId>com.sun.jdmk</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>1.8.0.10</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.0-801.jdbc3</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit-addons</groupId>
+            <artifactId>junit-addons</artifactId>
+            <version>${junit.addons.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>xercesImpl</artifactId>
+                    <groupId>xerces</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>xmlParserAPIs</artifactId>
+                    <groupId>xerces</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- dJUnit -->
+        <dependency>
+            <groupId>jp.co.dgic</groupId>
+            <artifactId>djunit</artifactId>
+            <version>${djunit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- since 2.1.0 -->
+        <dependency>
+            <groupId>jp.terasoluna.fw</groupId>
+            <artifactId>terasoluna-filedao</artifactId>
+            <version>${terasoluan.filedao.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>${servlet.api.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>jsp-api</artifactId>
+            <version>${jsp.api.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+</project>
