@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,6 +54,11 @@ import com.avicit.onlinemusic.vo.TipVo;
 @Controller
 @RequestMapping
 public class UpLoadMusicController {
+	
+	/**
+	 * 日志 两种测试
+	 */
+	private static org.slf4j.Logger logger = LoggerFactory.getLogger(UpLoadMusicController.class);
 
 	@Autowired
 	private MusicService musicService;
@@ -67,7 +72,7 @@ public class UpLoadMusicController {
 	private UserService userService;
 	@Autowired
 	private MessageService messageService;
-	
+
 	/*第二数据源同步数据使用*/
 	@Autowired
 	private MusicBackupService musicBackupService;
@@ -145,6 +150,9 @@ public class UpLoadMusicController {
 					if(music.isEmpty())continue;//可能会有三个上传表单却不一定三个都进行上传，这样其他的就为空需要判断  
 					// 保存文件
 					saveFile=new File(realpath + "\\" +sdf.format(dt) + rd.nextInt(9999) + saveType);
+					
+					logger.info("上传文件路径:"+saveFile.getAbsolutePath());
+					
 					FileUtils.copyInputStreamToFile(music.getInputStream(), saveFile);  
 				} else {
 					// 返回mp3文件上传页面 错误信息提示
@@ -167,7 +175,7 @@ public class UpLoadMusicController {
 	 * @return
 	 */
 	@RequestMapping(value="infoupload",method = RequestMethod.POST)
-	public String infoUploadExecute(@ModelAttribute("musicVo") MusicVo musicVo,HttpSession session,RedirectAttributes attr){
+	public String infoUploadExecute(@ModelAttribute("musicVo") MusicVo musicVo,HttpSession session,RedirectAttributes attr) throws Exception{
 
 		String title = musicVo.getTitle();
 		String singer= musicVo.getSinger();
@@ -186,7 +194,7 @@ public class UpLoadMusicController {
 			try {
 				/*1.先从session中取用户对象*/
 				User PlutoUser=(User)session.getAttribute("PlutoUser");	
-				
+
 				// 获取文件后缀
 				String filePath = path.substring(1).replace("upload", "upload\\");
 
@@ -203,7 +211,7 @@ public class UpLoadMusicController {
 				music.setUserId(PlutoUser.getId());
 				// 录入数据库
 				musicService.save(music);
-				
+
 				/*-----------------------------------*/
 				/*第二数据源同步数据使用 同步到music_backup表中*/
 				MusicBackup musicbackup=new MusicBackup();
@@ -229,7 +237,8 @@ public class UpLoadMusicController {
 				System.out.println("事务回滚了吗？------------------");
 				//编程式 方式来指定回滚事务。 虽然写法非常的简单，但是这个方法是高侵入性的，并且使你的代码与Spring框架的事务架构高度耦合
 				//TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-
+				/*=====================================================================================*/
+				throw e;// 在配置AOP事务处理时 切记throw扔出异常 不然事务不会回滚
 			}
 
 		}
