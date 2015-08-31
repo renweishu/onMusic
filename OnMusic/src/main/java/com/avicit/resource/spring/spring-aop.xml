@@ -48,7 +48,10 @@
 
 	<!-- 用一个通知器（advisor）把这个切面与 事务通知 绑定在一起 || 定义了 一个切面 注意星号后面要有个空格 -->
 	<!-- execution(* com.avicit.onlinemusic.controller.*Controller.*(..)) -->
-	<aop:config proxy-target-class="true">
+	<!-- 如果ProxyFactoryBean的proxyTargetClass属性被设为true，那么一个基于CGLIB的代理将创建 -->
+	<!-- 如果ProxyFactoryBean的proxyTargetClass属性被设为false，那么一个基于JDK的动态代理将创建 -->
+	<!-- 一般情况下默认为false -->
+	<aop:config >
 		<aop:pointcut id="allControllerOperation" expression="bean(*Controller*)" />
 		<aop:advisor advice-ref="testInterceptor" pointcut-ref="allControllerOperation"
 			order="1" />
