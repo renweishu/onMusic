@@ -15,12 +15,17 @@ import org.aopalliance.intercept.MethodInvocation;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
 
+import com.avicit.framework.util.DproCommonConsts;
+import com.avicit.framework.util.DproMessageConsts;
+import com.avicit.framework.util.exception.ValidationException;
+import com.avicit.framework.util.exception.message.BLogicMessage;
+import com.avicit.framework.util.exception.message.BLogicMessages;
+
 /**
- * [機 能]：排他制御
- * [説 明]：データレコード例外が発生した場合、Validation例外とし、
- *          排他エラーをセットする。
+ * [功能]：出路数据库写入异常-
+ * [说明]：1.如更新数据库，数据被其他客服端锁表 2.插入数据库字段过长出错
  *
- * @author  [新規作成] 2013/02/26 NDC@3HB2B 張軼胥
+ * @author   2015/09/01 马超
  * @version $Revision$
  */
 public class TestInterceptor implements MethodInterceptor {
@@ -53,14 +58,13 @@ public class TestInterceptor implements MethodInterceptor {
             // 插入数据库 数据长度过长
             if (e instanceof DataIntegrityViolationException) {
             	logger.info("插入数据出现异常:"+e.getMessage());
-//                BLogicMessages messages = new BLogicMessages();
-//                messages.add(DproCommonConsts.MESSAGE_TYPE, new BLogicMessage(DproMessageConsts.A0281));
-//                throw new ValidationException(messages);
+                BLogicMessages messages = new BLogicMessages();
+                messages.add(DproCommonConsts.MESSAGE_TYPE, new BLogicMessage(DproMessageConsts.A0281));
+                throw new ValidationException(messages);
             	
             }
             throw e;
-        
-			
+        		
 		}
 		return result;   
 		

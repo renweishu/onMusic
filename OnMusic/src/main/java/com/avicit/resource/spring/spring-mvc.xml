@@ -63,12 +63,14 @@
 	</bean>
 
 	<!-- 控制器异常处理 -->
+	<!-- 实现HandlerExceptionResolver接口很简单， 只需实现resolveException（Exception，Handler）方法， 
+		并返回一个ModelAndView，除此之外， 也可以直接使用SimpleMappingExceptionResolver。 这个解析器允许你取得任何可能被抛出的异常的类名，并把它映射到一个视图名 -->
 	<bean id="exceptionResolver"
 		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
 		<property name="exceptionMappings">
 			<props>
-				<prop key="java.lang.Exception">
-					error
+				<prop key="com.avicit.framework.util.exception.ValidationException">
+					E101
 				</prop>
 			</props>
 		</property>
