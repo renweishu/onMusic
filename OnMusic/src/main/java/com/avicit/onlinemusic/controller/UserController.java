@@ -60,6 +60,8 @@ public class UserController {
 			// addAttribute这个方法无法传递值
 			//attr.addAttribute("error", "用户名或密码不能为空");
 			 attr.addFlashAttribute("error", DproMessageConsts.VALID_USER_ALL);
+			 attr.addFlashAttribute("error", DproMessageConsts.VALID_USER_NAME);
+			 attr.addFlashAttribute("error", DproMessageConsts.VALID_USER_PASSWORD);
 			 return new ModelAndView("redirect:/index");
 			 //return new ModelAndView("redirect:/index","error", DproMessageConsts.VALID_USER_ALL);
 		} else {
