@@ -2,6 +2,6 @@
 0.maven构建项目
 1.技术构成 [springMVC+spring+mybatis]
 2.实现了多数据源切换
-3.
+3.JSP页面显示:JSTL标签【主要是里面的饿逻辑标签和格式标签】+spring自带表单标签
 
 
