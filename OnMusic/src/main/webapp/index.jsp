@@ -3,12 +3,14 @@
 	pageEncoding="UTF-8"%>
 <jsp:useBean id="userVo" class="com.avicit.onlinemusic.vo.UserVo"
 	scope="request" />
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <%
-	User plutoUser = (User)session.getAttribute("PlutoUser");
- List<MessageVo> mesList= (ArrayList<MessageVo>)request.getAttribute("mesList");
- List<TipVo> tiplist =(ArrayList<TipVo>)request.getAttribute("tiplist");
- List<LinkVo> linklist=(ArrayList<LinkVo>)request.getAttribute("linklist");
+	User plutoUser = (User) session.getAttribute("PlutoUser");
+	List<MessageVo> mesList = (ArrayList<MessageVo>) request.getAttribute("mesList");
+	List<TipVo> tiplist = (ArrayList<TipVo>) request.getAttribute("tiplist");
+	List<LinkVo> linklist = (ArrayList<LinkVo>) request.getAttribute("linklist");
 %>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -108,8 +110,9 @@
 						<%
 							if (plutoUser == null) {
 						%>
-						<%@taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
-						<label>${error}</label>
+  
+						<label>JSTL表达式：<fmt:message key="${error}" /></label><br />
+						<label>E  L表达式：${error}</label>
 						<sf:form action="login.do" method="post" commandName="userVo"
 							cssClass="niceform">
 
@@ -139,10 +142,9 @@
 						int myMessage = mesList.size();
 					%>
 					<p>
-						您有<%=(myMessage == 0) ? (myMessage)
-						: ("<font color=red><strong>" + myMessage + "</strong></font>")%>封未读短消息，请
-						<a href="message.do" style="color: red">查看</a>！ <br /> 播放我上次创建的
-						<a href="player" style="color: red">[播放列表]</a>！ <br />
+						您有<%=(myMessage == 0) ? (myMessage) : ("<font color=red><strong>" + myMessage + "</strong></font>")%>封未读短消息，请
+						<a href="message.do" style="color: red">查看</a>！ <br /> 播放我上次创建的 <a
+							href="player" style="color: red">[播放列表]</a>！ <br />
 						如果您有音乐分享，您可以点我进行 <a href="uploadmusicPage.do" style="color: red">[上传音乐]</a>！
 						<br />
 					</p>

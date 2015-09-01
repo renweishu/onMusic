@@ -75,7 +75,7 @@
 			<version>${spring.version}</version>
 		</dependency>
 		<!-- springframe end -->
-		
+
 		<!-- AOP 使用aspactj框架时 所依赖的两个包 -->
 		<dependency>
 			<groupId>aspectj</groupId>
@@ -245,6 +245,20 @@
 			<version>2.7.3</version>
 		</dependency>
 
+		<!-- JSTL使用需加入两个jar包:jstl与taglibs -->
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.1.2</version>
+		</dependency>
+
+		<!-- standard JSP 标准标签库，和jstl.jar 一起使用，在1.0的版本中，但在jstl-1.2.jar 就不在需要了。 -->
+		<!-- 想在项目中使用JSTL和EL表达式，那么你必须要引入这个standard.jar文件。即使你没有引入，那MyEclipse工具自带的类库也会帮你倒入。其他工具不会 -->
+		<dependency>
+			<groupId>taglibs</groupId>
+			<artifactId>standard</artifactId>
+			<version>1.1.2</version>
+		</dependency>
 
 		<!-- activeMq依赖jar包 -->
 		<!-- activemq-all-5.6.0.jar spring-jms-3.0.6.RELEASE.jar org.springframework.transaction-3.2.4.RELEASE.jar 

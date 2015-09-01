@@ -59,8 +59,9 @@ public class UserController {
 		if (Function.isInvalid(username) || Function.isInvalid(password)) {
 			// addAttribute这个方法无法传递值
 			//attr.addAttribute("error", "用户名或密码不能为空");
-			//attr.addFlashAttribute("error", DproMessageConsts.VALID_USER_ALL);
-			 return new ModelAndView("redirect:/index","error", DproMessageConsts.VALID_USER_ALL);
+			 attr.addFlashAttribute("error", DproMessageConsts.VALID_USER_ALL);
+			 return new ModelAndView("redirect:/index");
+			 //return new ModelAndView("redirect:/index","error", DproMessageConsts.VALID_USER_ALL);
 		} else {
 			// 转加密明文密码
 			password = Function.MD5Encode(password);
