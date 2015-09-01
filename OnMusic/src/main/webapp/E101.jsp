@@ -1,8 +1,24 @@
 <%@ page language="java" pageEncoding="utf-8" isErrorPage="true"%>
 <%@ page import="java.io.PrintWriter"%>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>数据库更新出错</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>OnlineMusic</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery.form.js"></script>
+<script type="text/javascript" src="js/nicejforms.js"></script>
+<script type="text/javascript" src="js/audioplayer.js"></script>
+<link href="css/table.css" rel="stylesheet" type="text/css" />
+<link href="css/page.css" rel="stylesheet" type="text/css" />
+<link href="css/default.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="css/LoadingStatus.css" type="text/css" />
+<link href="css/thickbox.css" rel="stylesheet" type="text/css" />
+<style type="text/css" media="screen">
+@import url(css/niceforms.css);
+</style>
 </head>
 <body>
 	<div id="header">
@@ -26,16 +42,13 @@
 		<div id="bg">
 			<div id="content">
 				<div class="post">
-					<h2 class="title">
-						错误码:[A0281]
-					</h2>
-					<h3 class="date">
-						错误消息:[对数据库写操作出错-某个字段过长]
-					</h3>
+					<h2 class="title">错误页:[E101]</h2>
+					<h2 class="title">错误码:[A0281]</h2>
+					<h2 class="title">错误消息:[对数据库写操作出错-某个字段过长]</h2>
 
 
 				</div>
-			</div>	
+			</div>
 			<!-- end sidebar -->
 			<div style="clear: both;">&nbsp;</div>
 		</div>
