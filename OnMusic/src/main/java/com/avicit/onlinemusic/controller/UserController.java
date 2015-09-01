@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.avicit.framework.util.DproMessageConsts;
 import com.avicit.framework.util.ResponseUtils;
 import com.avicit.onlinemusic.entity.User;
 import com.avicit.onlinemusic.service.UserService;
@@ -44,11 +46,11 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value="login",method = RequestMethod.POST)
-	public String userLoginExecute(@ModelAttribute("userVo") UserVo userVo,RedirectAttributes attr,BindingResult binding,HttpSession session){
+	public ModelAndView userLoginExecute(@ModelAttribute("userVo") UserVo userVo,RedirectAttributes attr,BindingResult binding,HttpSession session){
 
 		// 用户登录form 框验证 出错时
 		if(binding.hasErrors()){
-			return "redirect:/index";
+			return new ModelAndView("redirect:/index");
 		}
 		// 用户密码验证
 		String username = userVo.getName().trim();
@@ -57,8 +59,8 @@ public class UserController {
 		if (Function.isInvalid(username) || Function.isInvalid(password)) {
 			// addAttribute这个方法无法传递值
 			//attr.addAttribute("error", "用户名或密码不能为空");
-			attr.addFlashAttribute("error", "用户名或密码不能为空");
-			return "redirect:/index";
+			//attr.addFlashAttribute("error", DproMessageConsts.VALID_USER_ALL);
+			 return new ModelAndView("redirect:/index","error", DproMessageConsts.VALID_USER_ALL);
 		} else {
 			// 转加密明文密码
 			password = Function.MD5Encode(password);
@@ -66,13 +68,13 @@ public class UserController {
 			PlutoUser=userService.getUser(userVo.getName());
 			if (PlutoUser == null || PlutoUser.getId() == null){
 				//attr.addAttribute("error", "当前用户不存在");
-				attr.addFlashAttribute("error", "当前用户不存在");
-				return "redirect:/index";
+				attr.addFlashAttribute("error", DproMessageConsts.VALID_USER_NAME);
+				return new ModelAndView("redirect:/index");
 
 			} else if(!password.equals(PlutoUser.getPwd())){
 				//attr.addAttribute("error", "当前密码不正确，请重新登录");
-				attr.addFlashAttribute("error", "当前密码不正确，请重新登录");
-				return "redirect:/index";
+				attr.addFlashAttribute("error", DproMessageConsts.VALID_USER_PASSWORD);
+				return new ModelAndView("redirect:/index");
 			}
 		}
 
@@ -80,7 +82,7 @@ public class UserController {
 		session.setAttribute("PlutoUser", PlutoUser);
 
 		/* 这儿转发到IndexController 内部转发的两种写法 return "redirect:/index" 或者return new ModelAndView("redirect:/index")*/
-		return "redirect:/index";
+		return new ModelAndView("redirect:/index");
 
 	}
 
