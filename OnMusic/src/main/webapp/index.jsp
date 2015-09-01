@@ -5,6 +5,7 @@
 	scope="request" />
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <%
 	User plutoUser = (User) session.getAttribute("PlutoUser");
@@ -110,9 +111,13 @@
 						<%
 							if (plutoUser == null) {
 						%>
-  
-						<label>JSTL表达式：<fmt:message key="${error}" /></label><br />
-						<label>E  L表达式：${error}</label>
+
+						<label>JSTL表达式：
+						    <c:if test="${error!=null}">
+						      <fmt:message key="${error}" />
+						    </c:if>
+						
+						</label><br /> <label>E L表达式：${error}</label>
 						<sf:form action="login.do" method="post" commandName="userVo"
 							cssClass="niceform">
 
