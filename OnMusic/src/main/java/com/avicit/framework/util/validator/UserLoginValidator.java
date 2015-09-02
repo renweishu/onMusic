@@ -33,10 +33,12 @@ public class UserLoginValidator implements Validator{
 
 
 		// 使用了ValidationUtils中的一个静态方法rejectIfEmpty(..)来对name属性进行校验，假若'name'属性是 null 或者空字符串的话，就拒绝验证通过 。
-		ValidationUtils.rejectIfEmpty(errors, "name", DproMessageConsts.VALID_USER_ALL);
-		ValidationUtils.rejectIfEmpty(errors, "pwd", DproMessageConsts.VALID_USER_ALL);
+		//ValidationUtils.rejectIfEmpty(errors, "name", DproMessageConsts.VALID_USER_ALL);
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", DproMessageConsts.VALID_USER_ALL, "用户名不能为空............");
 
-		UserVo uservo=(UserVo)target;
+		ValidationUtils.rejectIfEmpty(errors, "pwd", DproMessageConsts.VALID_USER_ALL,"密码不能为空............");
+
+		//UserVo uservo=(UserVo)target;
 //		if (null == user.getPassword() || "".equals(user.getPassword())){
 //			errors.rejectValue("password", null, "Password is empty.");
 //		}

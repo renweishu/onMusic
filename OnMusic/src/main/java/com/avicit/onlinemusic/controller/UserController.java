@@ -1,6 +1,7 @@
 package com.avicit.onlinemusic.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.DataBinder;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -63,6 +65,19 @@ public class UserController {
 		// 用户登录form 框验证 出错时 
 		/*备注:使用@Valid+Spring MVC 出现400 错误|原因：必须含有BindingResult 参数|BindingResult紧跟在 @Valid 参数之后*/
 		if(binding.hasErrors()){
+
+			// 打印错误消息
+			List<FieldError>  err=binding.getFieldErrors(); 
+			FieldError fe; 
+			String field; 
+			String errorMessage; 
+			for (int i = 0; i < err.size(); i++) { 
+				fe=err.get(i); 
+				field=fe.getField();//得到那个字段验证出错 
+				errorMessage=fe.getDefaultMessage();//得到错误消息 
+				System.out.println("****************************错误字段消息："+field +"错误码"+fe.getCode()+" : "+errorMessage); 
+				
+			}
 
 			return new ModelAndView("redirect:/index");
 		}
