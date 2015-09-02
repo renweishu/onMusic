@@ -79,7 +79,8 @@ public class UserController {
 				System.out.println("****************************错误字段消息："+field +"错误码"+fe.getCode()+" : "+errorMessage); 
 				
 			}
-
+			// 测试使用  不用@Valid方法绑定在BindingResult里的错误消息
+			attr.addFlashAttribute("error", DproMessageConsts.VALID_USER_ALL);
 			return new ModelAndView("redirect:/index");
 		}
 		// 用户密码验证
