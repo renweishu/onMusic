@@ -123,12 +123,16 @@
 
 							<label for="textinput"> &nbsp;&nbsp;用户名： </label>
 							<br /> &nbsp;&nbsp;
+							
 							<sf:input path="name" id="textinput" size="15" maxlength="16" />
+							<sf:errors path="name"  />
+							
 							<br />
 							<label for="passwordinput"> &nbsp;&nbsp;密 码： </label>
 							<br /> &nbsp;&nbsp;
-							<sf:password path="pwd" id="passwordinput" size="15"
-								maxlength="16" />
+							
+							<sf:password path="pwd" id="passwordinput" size="15" maxlength="16" />
+							<sf:errors path="pwd"  />
 
 							<br />
 							<br /> &nbsp;&nbsp;&nbsp;&nbsp;

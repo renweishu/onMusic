@@ -10,6 +10,8 @@ import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.DataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.avicit.framework.util.DproMessageConsts;
 import com.avicit.framework.util.ResponseUtils;
+import com.avicit.framework.util.validator.UserLoginValidator;
 import com.avicit.onlinemusic.entity.User;
 import com.avicit.onlinemusic.service.UserService;
 import com.avicit.onlinemusic.util.Function;
@@ -38,6 +41,14 @@ public class UserController {
 
 
 	/**
+	 * <br/>数据验证
+	 * @param binder
+	 */
+	@InitBinder
+	public void initBinder(DataBinder binder) {
+		binder.setValidator(new UserLoginValidator());
+	}
+	/**
 	 * 用户登录
 	 * @param userVo
 	 * @param attr (用于后台一个controller跳转到另一个controller 传递值用)
@@ -45,7 +56,7 @@ public class UserController {
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping(value="login",method = RequestMethod.POST)
+	@RequestMapping(value="login",method = RequestMethod.POST)//@ModelAttribute("userVo") UserVo userVo
 	public ModelAndView userLoginExecute(@ModelAttribute("userVo") UserVo userVo,RedirectAttributes attr,BindingResult binding,HttpSession session){
 
 		// 用户登录form 框验证 出错时
@@ -59,11 +70,9 @@ public class UserController {
 		if (Function.isInvalid(username) || Function.isInvalid(password)) {
 			// addAttribute这个方法无法传递值
 			//attr.addAttribute("error", "用户名或密码不能为空");
-			 attr.addFlashAttribute("error", DproMessageConsts.VALID_USER_ALL);
-			 attr.addFlashAttribute("error", DproMessageConsts.VALID_USER_NAME);
-			 attr.addFlashAttribute("error", DproMessageConsts.VALID_USER_PASSWORD);
-			 return new ModelAndView("redirect:/index");
-			 //return new ModelAndView("redirect:/index","error", DproMessageConsts.VALID_USER_ALL);
+			attr.addFlashAttribute("error", DproMessageConsts.VALID_USER_ALL);
+			return new ModelAndView("redirect:/index");
+			//return new ModelAndView("redirect:/index","error", DproMessageConsts.VALID_USER_ALL);
 		} else {
 			// 转加密明文密码
 			password = Function.MD5Encode(password);
