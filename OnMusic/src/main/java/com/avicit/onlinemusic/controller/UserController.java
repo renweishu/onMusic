@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import net.sf.json.JSONObject;
 
@@ -56,11 +57,13 @@ public class UserController {
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping(value="login",method = RequestMethod.POST)//@ModelAttribute("userVo") UserVo userVo
-	public ModelAndView userLoginExecute(@ModelAttribute("userVo") UserVo userVo,RedirectAttributes attr,BindingResult binding,HttpSession session){
+	@RequestMapping(value="login",method = RequestMethod.POST)//@ModelAttribute("userVo") UserVo userVo 谨慎使用
+	public ModelAndView userLoginExecute(@Valid UserVo userVo,BindingResult binding,RedirectAttributes attr,HttpSession session){
 
-		// 用户登录form 框验证 出错时
+		// 用户登录form 框验证 出错时 
+		/*备注:使用@Valid+Spring MVC 出现400 错误|原因：必须含有BindingResult 参数|BindingResult紧跟在 @Valid 参数之后*/
 		if(binding.hasErrors()){
+
 			return new ModelAndView("redirect:/index");
 		}
 		// 用户密码验证

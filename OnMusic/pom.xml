@@ -177,7 +177,11 @@
 			<version>${slf4j.version}</version>
 		</dependency>
 		<!-- log end -->
+		
 		<!-- 表单验证使用spring validator 对bean进行类似js的校验 -->
+		<!-- SpringMVC 使用JSR-303进行校验 @Valid  -->
+		<!-- validation-api-1.0.0.GA.jar是JDK的接口；-->
+        <!-- hibernate-validator-4.2.0.Final.jar是对上述接口的实现。-->		 
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
