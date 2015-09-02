@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.DataBinder;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,7 +49,7 @@ public class UserController {
 	 * @param binder
 	 */
 	@InitBinder
-	public void initBinder(DataBinder binder) {
+	public void initBinder(WebDataBinder  binder) {
 		binder.setValidator(new UserLoginValidator());
 	}
 	/**

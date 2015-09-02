@@ -11,7 +11,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.avicit.onlinemusic.entity.User;
@@ -70,9 +73,24 @@ public class IndexController {
 	 * @return
 	 */
 	@RequestMapping
-	public String indexPageExecute (Model model,HttpSession session,HttpServletRequest request,RedirectAttributes attr){
+	public ModelAndView indexPageExecute (Model model,HttpSession session,HttpServletRequest request,RedirectAttributes attr){
 		System.out.println("============================="+request.getAttribute("error"));
 		logger.info("****************************************************************");
+
+//		// 打印错误消息 BindingResult binding,
+//		if(binding.hasErrors()){
+//			List<FieldError>  err=binding.getFieldErrors(); 
+//			FieldError fe; 
+//			String field; 
+//			String errorMessage; 
+//			for (int i = 0; i < err.size(); i++) { 
+//				fe=err.get(i); 
+//				field=fe.getField();//得到那个字段验证出错 
+//				errorMessage=fe.getDefaultMessage();//得到错误消息 
+//				System.out.println("****************************错误字段消息："+field +"错误码"+fe.getCode()+" : "+errorMessage); 
+//
+//			}
+//		}
 		logger1.info("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 		/*从session中或者用户名*/
 		/*1.先从session中取用户对象*/
@@ -94,7 +112,8 @@ public class IndexController {
 		model.addAttribute("linklist", linklist);
 
 
-		return "index";
+		//return "index";
+		return new ModelAndView("index");
 	}
 
 	/**
