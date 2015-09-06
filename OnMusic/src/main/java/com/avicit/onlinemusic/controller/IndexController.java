@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -73,7 +74,7 @@ public class IndexController {
 	 * @return
 	 */
 	@RequestMapping
-	public ModelAndView indexPageExecute (Model model,HttpSession session,HttpServletRequest request,RedirectAttributes attr){
+	public String indexPageExecute (Model model,HttpSession session,HttpServletRequest request,RedirectAttributes attr){
 		System.out.println("============================="+request.getAttribute("error"));
 		logger.info("****************************************************************");
 
@@ -98,8 +99,8 @@ public class IndexController {
 		model.addAttribute("linklist", linklist);
 
 
-		//return "index";
-		return new ModelAndView("index");
+		return "index";
+		//return new ModelAndView("index");
 	}
 
 	/**
