@@ -7,16 +7,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import net.sf.json.JSONObject;
-
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.DataBinder;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,6 +28,8 @@ import com.avicit.onlinemusic.service.UserService;
 import com.avicit.onlinemusic.util.Function;
 import com.avicit.onlinemusic.vo.UserVo;
 
+import net.sf.json.JSONObject;
+
 /**
  * 用户登录、注册、注销
  * <br>控制用户相关信息
@@ -40,8 +39,14 @@ import com.avicit.onlinemusic.vo.UserVo;
 @Controller
 @RequestMapping
 public class UserController {
+	
+	/**
+	 * 日志 记录器
+	 */
+	private static org.slf4j.Logger logger = LoggerFactory.getLogger(UserController.class);
 	@Autowired
 	private UserService userService;
+	
 
 
 	/**
@@ -75,7 +80,7 @@ public class UserController {
 				fe=err.get(i); 
 				field=fe.getField();//得到那个字段验证出错 
 				errorMessage=fe.getDefaultMessage();//得到错误消息 
-				System.out.println("****************************错误字段消息："+field +"错误码"+fe.getCode()+" : "+errorMessage); 
+				logger.info("****************************错误字段消息："+field +"错误码"+fe.getCode()+" : "+errorMessage);
 
 			}
 
