@@ -77,20 +77,6 @@ public class IndexController {
 		System.out.println("============================="+request.getAttribute("error"));
 		logger.info("****************************************************************");
 
-//		// 打印错误消息 BindingResult binding,
-//		if(binding.hasErrors()){
-//			List<FieldError>  err=binding.getFieldErrors(); 
-//			FieldError fe; 
-//			String field; 
-//			String errorMessage; 
-//			for (int i = 0; i < err.size(); i++) { 
-//				fe=err.get(i); 
-//				field=fe.getField();//得到那个字段验证出错 
-//				errorMessage=fe.getDefaultMessage();//得到错误消息 
-//				System.out.println("****************************错误字段消息："+field +"错误码"+fe.getCode()+" : "+errorMessage); 
-//
-//			}
-//		}
 		logger1.info("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 		/*从session中或者用户名*/
 		/*1.先从session中取用户对象*/
