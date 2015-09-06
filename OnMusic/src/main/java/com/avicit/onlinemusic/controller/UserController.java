@@ -81,8 +81,8 @@ public class UserController {
 			}
 
 			/*redirect:/index为重定向  ||forward:/index为内部转发  */
-			//attr.addFlashAttribute("error", DproMessageConsts.VALID_USER_ALL);
-			//return new ModelAndView("redirect:/index","error");
+//			attr.addFlashAttribute("error", DproMessageConsts.VALID_USER_ALL);
+//			return new ModelAndView("redirect:/index");
 
 			return new ModelAndView("forward:/index","error", DproMessageConsts.VALID_USER_ALL);
 		}
