@@ -84,7 +84,10 @@ public class UserController {
 //			attr.addFlashAttribute("error", DproMessageConsts.VALID_USER_ALL);
 //			return new ModelAndView("redirect:/index");
 
-			return new ModelAndView("forward:/index","error", DproMessageConsts.VALID_USER_ALL);
+			ModelAndView mv =new ModelAndView("forward:/index");
+			mv.addObject("error", DproMessageConsts.VALID_USER_ALL);
+			return mv;
+			//return new ModelAndView("forward:/index","error", DproMessageConsts.VALID_USER_ALL);
 		}
 		// 用户密码验证
 		String username = userVo.getName().trim();
