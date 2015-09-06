@@ -117,10 +117,10 @@ public class UserController {
 			//页面用jstl标签获取<fmt:message> 从而可以对应键值取得资源文件中消息
 			attr.addFlashAttribute("error", DproMessageConsts.VALID_USER_NAME);
 			return new ModelAndView("redirect:/index");
-			
+
 
 		} else if(!password.equals(PlutoUser.getPwd())){
-			
+
 			attr.addFlashAttribute("error", DproMessageConsts.VALID_USER_PASSWORD);
 			return new ModelAndView("redirect:/index");
 		}
