@@ -77,11 +77,14 @@ public class UserController {
 				field=fe.getField();//得到那个字段验证出错 
 				errorMessage=fe.getDefaultMessage();//得到错误消息 
 				System.out.println("****************************错误字段消息："+field +"错误码"+fe.getCode()+" : "+errorMessage); 
-				
+
 			}
-			// 测试使用  不用@Valid方法绑定在BindingResult里的错误消息
-			attr.addFlashAttribute("error", DproMessageConsts.VALID_USER_ALL);
-			return new ModelAndView("redirect:/index");
+
+			/*redirect:/index为重定向  ||forward:/index为内部转发  */
+			//attr.addFlashAttribute("error", DproMessageConsts.VALID_USER_ALL);
+			//return new ModelAndView("redirect:/index","error");
+
+			return new ModelAndView("forward:/index","error", DproMessageConsts.VALID_USER_ALL);
 		}
 		// 用户密码验证
 		String username = userVo.getName().trim();
