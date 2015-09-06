@@ -66,7 +66,6 @@ public class UserController {
 		// 用户登录form 框验证 出错时 
 		/*备注:使用@Valid+Spring MVC 出现400 错误|原因：必须含有BindingResult 参数|BindingResult紧跟在 @Valid 参数之后*/
 		if(binding.hasErrors()){
-
 			// 打印错误消息
 			List<FieldError>  err=binding.getFieldErrors(); 
 			FieldError fe; 
@@ -80,15 +79,23 @@ public class UserController {
 
 			}
 
-			/*redirect:/index为重定向  ||forward:/index为内部转发  */
-			attr.addFlashAttribute("error", DproMessageConsts.VALID_USER_ALL);
-//			return new ModelAndView("redirect:/index");
+			/*redirect:/index为重定向    与RedirectAttributes配合使用*/
+			/*addFlashAttribute与addAttribute区别 :*/
+			/*弊端:addAttribute传递的参数会在url地址中暴露，如果是中文时，还会出现乱码，并且影响addFlashAttribute传递的参数在页面中用EL表达式无法娶到*/
+			/*addFlashAttribute传递的参数在URL地址中不会暴露，页面取值直接用el表达式就能获得到，这里的原理是放到session中---------------------，
+			 * 但是 session在跳到页面后马上移除对象。所以你刷新一下后这个值就会丢掉。----------------------------------------------------*/
+			//			ModelAndView mv =new ModelAndView("redirect:/index");
+			//			attr.addFlashAttribute("error", DproMessageConsts.VALID_USER_ALL);//
+			//			attr.addAttribute("test", "test");
 
+			
+			
+			/*forward:/index为内部转发------------------------------------------*/
 			ModelAndView mv =new ModelAndView("forward:/index");
-			//ModelAndView mv =new ModelAndView("redirect:/index");
+			/*ModelAndView类使用的ModelMap类是一个自定义的Map的实现。 当有一个新对象加入的时候，它就被用于为这个对象自动生成一个键*/
 			mv.addObject("error", DproMessageConsts.VALID_USER_ALL);
 			return mv;
-			//return new ModelAndView("forward:/index","error", DproMessageConsts.VALID_USER_ALL);
+
 		}
 		// 用户密码验证
 		String username = userVo.getName().trim();
