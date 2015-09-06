@@ -121,8 +121,8 @@
 						<sf:form action="login.do" method="post" commandName="userVo"
 							cssClass="niceform">
 							<!-- 页面头部显示一个错误清单 path="*"：显示所有错误   path="lastName*"：显示所有与lastName字段有关的错误-->
-							<label for="textinput"> &nbsp;&nbsp;错误消息提示： </label>
-                            <sf:errors path="*"  /><br /> &nbsp;&nbsp;
+							<!-- <label for="textinput"> &nbsp;&nbsp;错误消息提示： </label> -->
+                            <!-- <sf:errors path="*"  /><br /> &nbsp;&nbsp; -->
 
 							<label for="textinput"> &nbsp;&nbsp;用户名： </label>
 							<br /> &nbsp;&nbsp;

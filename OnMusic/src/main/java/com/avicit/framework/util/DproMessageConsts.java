@@ -33,6 +33,16 @@ public final class DproMessageConsts {
     // WEB系验证
     // **                                                         **
     //**************************************************************
+    /**
+     * 用户登录验证<br>
+     * <strong>user.require.name = 用户名不能为空---。</strong>
+     */
+    public static final String VALID_REQUIRE_NAME = "user.require.name";
+    /**
+     * 用户登录验证<br>
+     * <strong>user.require.password = 密码不能为空---。</strong>
+     */
+    public static final String VALID_REQUIRE_PWD = "user.require.password";
     
     /**
      * 用户登录验证<br>

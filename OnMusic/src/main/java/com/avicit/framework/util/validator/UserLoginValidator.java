@@ -30,18 +30,15 @@ public class UserLoginValidator implements Validator{
                               实现一个Validator也比较简单，尤其是当你学会了Spring所提供的ValidationUtils以后。我们一起来看一下如何才能创建一个校验器。
 		 */
 
-
-
 		// 使用了ValidationUtils中的一个静态方法rejectIfEmpty(..)来对name属性进行校验，假若'name'属性是 null 或者空字符串的话，就拒绝验证通过 。
 		//ValidationUtils.rejectIfEmpty(errors, "name", DproMessageConsts.VALID_USER_ALL);
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", DproMessageConsts.VALID_USER_ALL, "用户名不能为空............");
-
-		ValidationUtils.rejectIfEmpty(errors, "pwd", DproMessageConsts.VALID_USER_ALL,"密码不能为空............");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", DproMessageConsts.VALID_REQUIRE_NAME, "用户名不能为空............");
+		ValidationUtils.rejectIfEmpty(errors, "pwd", DproMessageConsts.VALID_REQUIRE_PWD,"密码不能为空............");
 
 		//UserVo uservo=(UserVo)target;
-//		if (null == user.getPassword() || "".equals(user.getPassword())){
-//			errors.rejectValue("password", null, "Password is empty.");
-//		}
+		//		if (null == user.getPassword() || "".equals(user.getPassword())){
+		//			errors.rejectValue("password", null, "Password is empty.");
+		//		}
 
 
 	}

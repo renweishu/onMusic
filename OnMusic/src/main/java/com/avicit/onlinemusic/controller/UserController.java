@@ -10,6 +10,7 @@ import javax.validation.Valid;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.WebDataBinder;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -38,6 +40,7 @@ import net.sf.json.JSONObject;
  */
 @Controller
 @RequestMapping
+//@SessionAttributes("PlutoUser")//回自动将ModelMap中对应的PlutoUser值放入session中
 public class UserController {
 	
 	/**
@@ -131,10 +134,14 @@ public class UserController {
 		}
 
 		/*用户信息验证成功 用户信息放入session中*/
+		ModelAndView mv =new ModelAndView("forward:/index");
 		session.setAttribute("PlutoUser", PlutoUser);
+		/*注解@SessionAttributes("PlutoUser")//回自动将ModelMap中对应的PlutoUser值放入session中*/
+		//mv.addObject("PlutoUser", PlutoUser);
+
 
 		/* 这儿转发到IndexController 内部转发的两种写法 return "redirect:/index" 或者return new ModelAndView("redirect:/index")*/
-		return new ModelAndView("redirect:/index");
+		return mv;
 
 	}
 
