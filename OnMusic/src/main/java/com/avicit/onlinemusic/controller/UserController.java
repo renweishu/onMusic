@@ -93,6 +93,7 @@ public class UserController {
 			/*forward:/index为内部转发------------------------------------------*/
 			ModelAndView mv =new ModelAndView("forward:/index");
 			/*ModelAndView类使用的ModelMap类是一个自定义的Map的实现。 当有一个新对象加入的时候，它就被用于为这个对象自动生成一个键*/
+			/*如果是redirect:/index为重定向方式时，会清空ModelMap里的存放值*/
 			mv.addObject("error", DproMessageConsts.VALID_USER_ALL);
 			return mv;
 
