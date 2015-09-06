@@ -10,7 +10,6 @@ import javax.validation.Valid;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.WebDataBinder;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -42,14 +40,14 @@ import net.sf.json.JSONObject;
 @RequestMapping
 //@SessionAttributes("PlutoUser")//回自动将ModelMap中对应的PlutoUser值放入session中
 public class UserController {
-	
+
 	/**
 	 * 日志 记录器
 	 */
 	private static org.slf4j.Logger logger = LoggerFactory.getLogger(UserController.class);
 	@Autowired
 	private UserService userService;
-	
+
 
 
 	/**
@@ -96,12 +94,12 @@ public class UserController {
 			//			attr.addFlashAttribute("error", DproMessageConsts.VALID_USER_ALL);//
 			//			attr.addAttribute("test", "test");
 
-			
-			
+
 			/*forward:/index为内部转发------------------------------------------*/
 			ModelAndView mv =new ModelAndView("forward:/index");
 			/*ModelAndView类使用的ModelMap类是一个自定义的Map的实现。 当有一个新对象加入的时候，它就被用于为这个对象自动生成一个键*/
-			/*如果是redirect:/index为重定向方式时，会清空ModelMap里的存放值*/
+			/*如果是redirect:/index为重定向到另外一个Controller时，会清空BindingResult验证结果和ModelMap里的存放值*/
+			/*RedirectAttributes如论是使用重定向或者转发 都不会清空里面的值，因为它类似与url传值*/
 			mv.addObject("error", DproMessageConsts.VALID_USER_ALL);
 			return mv;
 
@@ -110,27 +108,21 @@ public class UserController {
 		String username = userVo.getName().trim();
 		String password=userVo.getPwd().trim();
 		User PlutoUser=null;
-		if (Function.isInvalid(username) || Function.isInvalid(password)) {
-			// addAttribute这个方法无法传递值
-			//attr.addAttribute("error", "用户名或密码不能为空");
-			attr.addFlashAttribute("error", DproMessageConsts.VALID_USER_ALL);
-			return new ModelAndView("redirect:/index");
-			//return new ModelAndView("redirect:/index","error", DproMessageConsts.VALID_USER_ALL);
-		} else {
-			// 转加密明文密码
-			password = Function.MD5Encode(password);
-			// 获取用户信息
-			PlutoUser=userService.getUser(userVo.getName());
-			if (PlutoUser == null || PlutoUser.getId() == null){
-				//attr.addAttribute("error", "当前用户不存在");
-				attr.addFlashAttribute("error", DproMessageConsts.VALID_USER_NAME);
-				return new ModelAndView("redirect:/index");
 
-			} else if(!password.equals(PlutoUser.getPwd())){
-				//attr.addAttribute("error", "当前密码不正确，请重新登录");
-				attr.addFlashAttribute("error", DproMessageConsts.VALID_USER_PASSWORD);
-				return new ModelAndView("redirect:/index");
-			}
+		// 转加密明文密码
+		password = Function.MD5Encode(password);
+		// 获取用户信息
+		PlutoUser=userService.getUser(username);
+		if (PlutoUser == null || PlutoUser.getId() == null){
+			//页面用jstl标签获取<fmt:message> 从而可以对应键值取得资源文件中消息
+			attr.addFlashAttribute("error", DproMessageConsts.VALID_USER_NAME);
+			return new ModelAndView("redirect:/index");
+			
+
+		} else if(!password.equals(PlutoUser.getPwd())){
+			
+			attr.addFlashAttribute("error", DproMessageConsts.VALID_USER_PASSWORD);
+			return new ModelAndView("redirect:/index");
 		}
 
 		/*用户信息验证成功 用户信息放入session中*/
@@ -138,7 +130,6 @@ public class UserController {
 		session.setAttribute("PlutoUser", PlutoUser);
 		/*注解@SessionAttributes("PlutoUser")//回自动将ModelMap中对应的PlutoUser值放入session中*/
 		//mv.addObject("PlutoUser", PlutoUser);
-
 
 		/* 这儿转发到IndexController 内部转发的两种写法 return "redirect:/index" 或者return new ModelAndView("redirect:/index")*/
 		return mv;
