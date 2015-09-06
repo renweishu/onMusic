@@ -3,16 +3,12 @@
 	pageEncoding="UTF-8"%>
 <jsp:useBean id="userVo" class="com.avicit.onlinemusic.vo.UserVo"
 	scope="request" />
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<!-- 后台传递的四个变量值 PlutoUser对应session用户信息    mesList，tiplist，linklist对应三个list -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<%
-	User plutoUser = (User) session.getAttribute("PlutoUser");
-	List<MessageVo> mesList = (ArrayList<MessageVo>) request.getAttribute("mesList");
-	List<TipVo> tiplist = (ArrayList<TipVo>) request.getAttribute("tiplist");
-	List<LinkVo> linklist = (ArrayList<LinkVo>) request.getAttribute("linklist");
-%>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -107,95 +103,76 @@
 			<!-- end contentn -->
 			<div id="sidebar">
 				<div id="about-box" style="font-size: 12px">
-					<p>
-						<%
-							if (plutoUser == null) {
-						%>
+					<c:if test="${PlutoUser ==null}">
+						<p>
+							<label>JSTL表达式： <c:if test="${error!=null}">
+									<fmt:message key="${error}" />
+								</c:if>
 
-						<label>JSTL表达式：
-						    <c:if test="${error!=null}">
-						      <fmt:message key="${error}" />
-						    </c:if>
-						
-						</label><br /> <label>E L表达式：${error}</label>
-						<sf:form action="login.do" method="post" commandName="userVo"
-							cssClass="niceform">
-							<!-- 页面头部显示一个错误清单 path="*"：显示所有错误   path="lastName*"：显示所有与lastName字段有关的错误-->
-							<!-- <label for="textinput"> &nbsp;&nbsp;错误消息提示： </label> -->
-                            <!-- <sf:errors path="*"  /><br /> &nbsp;&nbsp; -->
+							</label><br /> <label>E L表达式：${error}</label>
+							<sf:form action="login.do" method="post" commandName="userVo"
+								cssClass="niceform">
+								<!-- 页面头部显示一个错误清单 path="*"：显示所有错误   path="lastName*"：显示所有与lastName字段有关的错误-->
+								<!-- <label for="textinput"> &nbsp;&nbsp;错误消息提示： </label> -->
+								<!-- <sf:errors path="*"  /><br /> &nbsp;&nbsp; -->
 
-							<label for="textinput"> &nbsp;&nbsp;用户名： </label>
-							<br /> &nbsp;&nbsp;
+								<label for="textinput"> &nbsp;&nbsp;用户名： </label>
+								<br /> &nbsp;&nbsp;
 							
 							<sf:input path="name" id="textinput" size="15" maxlength="16" />
-							<sf:errors path="name"  />
-							
-							<br />
-							<label for="passwordinput"> &nbsp;&nbsp;密 码： </label>
-							<br /> &nbsp;&nbsp;
-							
-							<sf:password path="pwd" id="passwordinput" size="15" maxlength="16" />
-							<sf:errors path="pwd"  />
+								<sf:errors path="name" />
 
-							<br />
-							<br /> &nbsp;&nbsp;&nbsp;&nbsp;
+								<br />
+								<label for="passwordinput"> &nbsp;&nbsp;密 码： </label>
+								<br /> &nbsp;&nbsp;
+							
+							<sf:password path="pwd" id="passwordinput" size="15"
+									maxlength="16" />
+								<sf:errors path="pwd" />
+
+								<br />
+								<br /> &nbsp;&nbsp;&nbsp;&nbsp;
 							<a href="register.jsp?height=175&width=300&modal=true"
-								class="thickbox" title="我要注册">我要注册</a> &nbsp;&nbsp;
+									class="thickbox" title="我要注册">我要注册</a> &nbsp;&nbsp;
 							<input type="submit" value="登  陆" />
-						</sf:form>
-					</p>
-					<%
-						} else {
-					%>
-					<p>
-						<%=plutoUser.getName()%>，欢迎您回来！
-					</p>
-					<%
-						int myMessage = mesList.size();
-					%>
-					<p>
-						您有<%=(myMessage == 0) ? (myMessage) : ("<font color=red><strong>" + myMessage + "</strong></font>")%>封未读短消息，请
-						<a href="message.do" style="color: red">查看</a>！ <br /> 播放我上次创建的 <a
-							href="player" style="color: red">[播放列表]</a>！ <br />
-						如果您有音乐分享，您可以点我进行 <a href="uploadmusicPage.do" style="color: red">[上传音乐]</a>！
-						<br />
-					</p>
-					<p>
-						退出请点 <a href="logout.do" style="color: #FF0000">[注销登陆]</a>！
-					</p>
-					<%
-						}
-					%>
+							</sf:form>
+						</p>
+					</c:if>
+					<c:if test="${PlutoUser !=null}">
+
+						<p>
+							<c:out value="${PlutoUser.name}"></c:out>
+							，欢迎您回来！
+						</p>
+						<p>
+							您有<font color=red>
+							<strong><c:out value="${mesList.size()}"></c:out></strong></font>封未读短消息，请
+							<a href="message.do" style="color: red">查看</a>！ <br /> 播放我上次创建的
+							<a href="player" style="color: red">[播放列表]</a>！ <br />
+							如果您有音乐分享，您可以点我进行 <a href="uploadmusicPage.do" style="color: red">[上传音乐]</a>！
+							<br />
+						</p>
+						<p>
+							退出请点 <a href="logout.do" style="color: #FF0000">[注销登陆]</a>！
+						</p>
+					</c:if>
 
 				</div>
 				<ul>
 					<li>
 						<h2>最新消息</h2>
 						<ul>
-							<%
-								for (TipVo tipV : tiplist) {
-									String tip = tipV.getValue();
-									out.println("<li>");
-									out.println(tip);
-									out.println("</li>");
-								}
-							%>
-
+						    <c:forEach items="${tiplist}" var="tipV">
+						        <li><c:out value="${tipV.value}"></c:out></li>
+						    </c:forEach>
 						</ul>
 					</li>
 					<li>
 						<h2>友情链接</h2>
 						<ul>
-							<%
-								for (LinkVo link : linklist) {
-									String link_title = link.getTitle();
-									String link_value = link.getValue();
-									out.println("<li>");
-									out.println("<a href=\"" + link_value + "\">");
-									out.println(link_title + "</a>");
-									out.println("</li>");
-								}
-							%>
+						    <c:forEach items="${linklist}" var="link">
+						        <li><a href="<c:out value="${link.value}"/>"><c:out value="${link.title}"></c:out></a></li>
+						    </c:forEach>
 						</ul>
 					</li>
 				</ul>
